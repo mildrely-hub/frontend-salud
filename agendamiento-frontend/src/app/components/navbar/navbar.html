@@ -1,38 +1,35 @@
 <nav class="navbar">
-  <div class="navbar-brand" (click)="redirigirSegunRol()">
-    <span class="brand-icon">♡</span>
-    <span class="brand-name">MJ Salud</span>
-  </div>
+  <div class="navbar-container">
+    <!-- Logo/Brand -->
+    <div class="navbar-brand" (click)="redirigirSegunRol()">
+      <i class="fas fa-hospital"></i>
+      <span>MJ Salud</span>
+    </div>
 
-  <div class="navbar-links">
-    <a routerLink="/" class="nav-link">Inicio</a>
-    <a routerLink="#servicios" class="nav-link">Servicios</a>
+    <!-- DEBUG: Muestra estado actual -->
+    <div style="color: white; font-size: 12px; background: #666; padding: 5px; border-radius: 4px;">
+      DEBUG: isLoggedIn = {{ isLoggedIn }} | usuario = {{ usuario | json }}
+    </div>
 
-    <!-- Mostrar enlaces según rol -->
-    <ng-container *ngIf="isLoggedIn()">
-      <a *ngIf="esAdministrador()" routerLink="/admin-dashboard" class="nav-link">Dashboard</a>
-      <a *ngIf="esMedico()" routerLink="/medico" class="nav-link">Mi Panel</a>
-      <a *ngIf="esPaciente()" routerLink="/citas" class="nav-link">Mis Citas</a>
-    </ng-container>
-  </div>
-
-  <div class="navbar-actions">
-    <!-- Mostrar información del usuario si está logueado -->
-    <div *ngIf="isLoggedIn()" class="user-info">
-      <span style="font-size: 14px; color: #4b5563; margin-right: 10px;">
-        {{ authService.obtenerUsuario()?.nombreCompleto }}
-      </span>
-      <span style="font-size: 12px; color: #9ca3af; margin-right: 15px;">
-        ({{ authService.obtenerUsuario()?.rol }})
-      </span>
-      <button (click)="cerrarSesion()" class="btn-logout-nav">
-        Cerrar Sesión
+    <!-- User Info (visible cuando está logueado) -->
+    <div class="navbar-user" *ngIf="isLoggedIn && usuario">
+      <div class="user-info">
+        <i class="fas fa-user-circle"></i>
+        <div class="user-details">
+          <span class="user-name">{{ usuario?.nombre }} {{ usuario?.apellido }}</span>
+          <span class="user-rol">({{ usuario?.rol }})</span>
+        </div>
+      </div>
+      <button (click)="cerrarSesion()" class="btn-logout">
+        <i class="fas fa-sign-out-alt"></i> Salir
       </button>
     </div>
 
-    <!-- Botón de login si no está logueado -->
-    <button *ngIf="!isLoggedIn()" routerLink="/login" class="btn-login-nav">
-      Iniciar Sesión
-    </button>
+    <!-- Login button (visible cuando NO está logueado) -->
+    <div class="navbar-actions" *ngIf="!isLoggedIn">
+      <a routerLink="/login" class="btn-login">
+        <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+      </a>
+    </div>
   </div>
 </nav>

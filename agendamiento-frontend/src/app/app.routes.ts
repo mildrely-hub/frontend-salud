@@ -1,15 +1,16 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home';
-import { Login } from './pages/login/login';
-import { Usuarios } from './pages/usuarios/usuarios'; // <- Cambiado de UsuariosComponent a Usuarios
-import { Resumen } from './pages/admin/resumen';
+import { LoginComponent } from './pages/login/login';
+import { AdminComponent } from './pages/admin/resumen';
+import { Usuarios } from './pages/usuarios/usuarios';  // ← Cambiado: Usuarios (no UsuariosComponent)
+import { CitasComponent } from './pages/citas/citas';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent, pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'login', component: Login },
-  { path: 'usuarios', component: Usuarios }, // <- Cambiado aquí también
-  { path: 'admin-dashboard', component: Resumen },
-  { path: 'admin/resumen', component: Resumen },
-  { path: '**', redirectTo: '' }
+  { path: 'login', component: LoginComponent },
+  { path: 'admin', component: AdminComponent },
+  { path: 'usuarios', component: Usuarios },  // ← Cambiado: Usuarios
+  { path: 'citas', component: CitasComponent },
+  { path: '**', redirectTo: '/home' }
 ];

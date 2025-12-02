@@ -1,0 +1,133 @@
+<div class="agendar-cita-container">
+    <div class="header">
+        <button class="btn-volver" (click)="cancelar()">
+            <i class="fas fa-arrow-left"></i> Volver a Mis Citas
+        </button>
+        <h1><i class="fas fa-calendar-plus"></i> Agendar Nueva Cita</h1>
+    </div>
+
+    <div class="agendar-card">
+        <form (ngSubmit)="onSubmit()" #citaForm="ngForm">
+
+            <div class="form-section">
+                <h3><i class="fas fa-stethoscope"></i> 1. Selecciona Especialidad</h3>
+                <div class="form-group">
+                    <label for="especialidad">
+                        <i class="fas fa-heartbeat"></i> Especialidad Médica *
+                    </label>
+                    <select id="especialidad" name="especialidad" [(ngModel)]="especialidad"
+                        (change)="onEspecialidadChange()" required>
+                        <option value="">-- Selecciona una especialidad --</option>
+                        <option *ngFor="let esp of especialidades" [value]="esp">
+                            {{ esp }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-section" *ngIf="especialidad">
+                <h3><i class="fas fa-user-md"></i> 2. Selecciona Médico</h3>
+                <div class="form-group">
+                    <label for="medico">
+                        <i class="fas fa-user-md"></i> Médico *
+                    </label>
+                    <select id="medico" name="medico" [(ngModel)]="medico" required
+                        [disabled]="medicosFiltrados.length === 0">
+                        <option value="">-- Selecciona un médico --</option>
+                        <option *ngFor="let med of medicosFiltrados" [value]="med.nombre">
+                            {{ med.nombre }}
+                        </option>
+                    </select>
+                    <small *ngIf="medicosFiltrados.length === 0" class="text-warning">
+                        No hay médicos disponibles para esta especialidad. Por favor selecciona otra.
+                    </small>
+                </div>
+            </div>
+
+            <div class="form-section" *ngIf="medico">
+                <h3><i class="fas fa-clock"></i> 3. Selecciona Fecha y Hora</h3>
+
+                <div class="row">
+                    <div class="form-group col">
+                        <label for="fecha">
+                            <i class="fas fa-calendar-alt"></i> Fecha *
+                        </label>
+                        <select id="fecha" name="fecha" [(ngModel)]="fecha" required>
+                            <option value="">-- Selecciona una fecha --</option>
+                            <option *ngFor="let fecha of fechasDisponibles" [value]="fecha">
+                                {{ formatFecha(fecha) }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col">
+                        <label for="hora">
+                            <i class="fas fa-clock"></i> Hora *
+                        </label>
+                        <select id="hora" name="hora" [(ngModel)]="hora" required>
+                            <option value="">-- Selecciona una hora --</option>
+                            <option *ngFor="let hora of horarios" [value]="hora">
+                                {{ hora }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section" *ngIf="fecha && hora">
+                <h3><i class="fas fa-file-medical"></i> 4. Describe tu Consulta</h3>
+
+                <div class="form-group">
+                    <label for="motivo">
+                        <i class="fas fa-comment-medical"></i> Motivo de la Consulta *
+                    </label>
+                    <textarea id="motivo" name="motivo" [(ngModel)]="motivo" rows="3"
+                        placeholder="Describe brevemente el motivo de tu consulta..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="sintomas">
+                        <i class="fas fa-thermometer"></i> Síntomas (Opcional)
+                    </label>
+                    <textarea id="sintomas" name="sintomas" [(ngModel)]="sintomas" rows="4"
+                        placeholder="Describe tus síntomas: duración, intensidad, factores que los alivian o empeoran..."></textarea>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn-cancelar" (click)="cancelar()">
+                    <i class="fas fa-times"></i> Cancelar
+                </button>
+                <button type="submit" class="btn-agendar" [disabled]="!citaForm.form.valid">
+                    <i class="fas fa-calendar-check"></i> Confirmar Cita
+                </button>
+            </div>
+        </form>
+
+        <div class="resumen-cita" *ngIf="medico && fecha && hora">
+            <h4><i class="fas fa-clipboard-check"></i> Resumen de tu Cita</h4>
+            <div class="resumen-content">
+                <div class="resumen-item">
+                    <span class="label">Especialidad:</span>
+                    <span class="value">{{ especialidad }}</span>
+                </div>
+                <div class="resumen-item">
+                    <span class="label">Médico:</span>
+                    <span class="value">{{ medico }}</span>
+                </div>
+                <div class="resumen-item">
+                    <span class="label">Fecha:</span>
+                    <span class="value">{{ formatFecha(fecha) }}</span>
+                </div>
+                <div class="resumen-item">
+                    <span class="label">Hora:</span>
+                    <span class="value">{{ hora }}</span>
+                </div>
+                <div class="resumen-item" *ngIf="motivo">
+                    <span class="label">Motivo:</span>
+                    <span class="value">{{ motivo }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

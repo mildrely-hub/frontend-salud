@@ -1,85 +1,66 @@
-<section class="login-wrapper">
+<div class="login-container">
+  <!-- Error message -->
+  <div *ngIf="errorMessage" class="alert alert-error">
+    <strong>⚠️ Error:</strong> {{ errorMessage }}
+  </div>
+
+  <!-- Login Form -->
   <div class="login-card">
-    <div class="login-logo">
-      <span class="logo-icon">♡</span>
-    </div>
+    <h2><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</h2>
 
-    <h1 class="login-title">MJ Salud</h1>
-    <p class="login-subtitle">Inicia sesión en tu cuenta</p>
-
-    <!-- Mensaje de error -->
-    <div *ngIf="errorMensaje" class="alert-error">
-      <strong>⚠️ Error:</strong> {{ errorMensaje }}
-    </div>
-
-    <!-- Formulario de login -->
     <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
       <div class="form-group">
         <label for="email">
-          <span>📧</span> Correo Electrónico
+          <i class="fas fa-envelope"></i> Correo Electrónico
         </label>
-        <input type="email" id="email" name="email" [(ngModel)]="email" placeholder="ejemplo@mjsalud.com" required
-          [disabled]="cargando" autocomplete="email">
+        <input type="email" id="email" name="email" [(ngModel)]="email" placeholder="ejemplo@email.com" required
+          [disabled]="isLoading" autocomplete="email" /> <!-- ← CIERRA CON /> -->
       </div>
 
       <div class="form-group">
         <label for="password">
-          <span>🔒</span> Contraseña
+          <i class="fas fa-lock"></i> Contraseña
         </label>
         <input type="password" id="password" name="password" [(ngModel)]="password" placeholder="••••••••" required
-          [disabled]="cargando" autocomplete="current-password">
+          [disabled]="isLoading" autocomplete="current-password" /> <!-- ← CIERRA CON /> -->
       </div>
 
-      <button type="submit" class="btn-login-primary" [disabled]="cargando || !email || !password">
-        <span *ngIf="!cargando">🚀 Iniciar Sesión</span>
-        <span *ngIf="cargando">
-          <span class="spinner"></span> Procesando...
+      <button type="submit" class="btn-login-primary" [disabled]="isLoading || !email || !password">
+        <span *ngIf="!isLoading">
+          <i class="fas fa-sign-in-alt"></i> Ingresar
+        </span>
+        <span *ngIf="isLoading">
+          <i class="fas fa-spinner fa-spin"></i> Procesando...
         </span>
       </button>
     </form>
 
-    <!-- Credenciales de demostración -->
-    <div class="login-demo-box">
-      <p><strong>🔑 Credenciales de Prueba:</strong></p>
-      <p style="font-size: 12px; color: #6b7280; margin-bottom: 10px;">
-        Selecciona un tipo de usuario para probar:
-      </p>
-
-      <div class="demo-options">
-        <div *ngFor="let cred of demoCredentials" class="demo-option" (click)="usarCredencialDemo(cred)">
-          <div class="demo-header">
-            <span class="demo-icon">
-              {{ cred.tipo === 'Administrador' ? '👑' :
-              cred.tipo === 'Médico' ? '⚕️' : '👤' }}
-            </span>
-            <strong>{{ cred.tipo }}</strong>
-          </div>
-          <div class="demo-details">
-            <small><strong>Usuario:</strong> {{ cred.correo }}</small><br>
-            <small><strong>Contraseña:</strong> {{ cred.password }}</small>
-            <p class="demo-desc">{{ cred.descripcion }}</p>
-          </div>
-          <div class="demo-action">
-            <button type="button" class="btn-demo-try">Probar</button>
-          </div>
+    <!-- Credenciales de Demo -->
+    <div class="demo-section">
+      <h4><i class="fas fa-vial"></i> Credenciales de Prueba</h4>
+      <div class="demo-credentials">
+        <div *ngFor="let cred of credencialesDemo" class="demo-option" (click)="usarCredencialDemo(cred)">
+          <strong>{{ cred.rol }}</strong><br>
+          <small>{{ cred.email }}</small>
         </div>
       </div>
+      <p class="demo-note">
+        <i class="fas fa-info-circle"></i>
+        Usa estas credenciales para probar el sistema. Contraseña: <code>password123</code>
+      </p>
     </div>
 
-    <!-- Enlaces adicionales -->
+    <!-- Footer -->
     <div class="login-footer">
-      <button routerLink="/" class="btn-login-secondary" [disabled]="cargando">
-        ↩ Volver al Inicio
+      <button routerLink="/" class="btn-login-secondary" [disabled]="isLoading">
+        <i class="fas fa-home"></i> Volver al Inicio
       </button>
-
-      <div class="login-links">
-        <a routerLink="/register" class="link-register">
-          📝 ¿No tienes cuenta? Regístrate
+      <p>
+        ¿No tienes cuenta?
+        <a (click)="irARegistro()" class="register-link">
+          <i class="fas fa-user-plus"></i> Regístrate aquí
         </a>
-        <a href="#" class="link-forgot">
-          🔓 ¿Olvidaste tu contraseña?
-        </a>
-      </div>
+      </p>
     </div>
   </div>
-</section>
+</div>

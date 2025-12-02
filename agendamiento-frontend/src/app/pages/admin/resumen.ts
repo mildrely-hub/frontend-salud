@@ -1,54 +1,38 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { AuthService } from '../../services/auth';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService, Usuario } from '../../services/auth';
 
 @Component({
-  selector: 'app-resumen',
-  standalone: true,
-  imports: [CommonModule],
+  selector: 'app-admin',
   templateUrl: './resumen.html',
   styleUrls: ['./resumen.css']
 })
-export class Resumen implements OnInit {
-  private authService = inject(AuthService);
-  private router = inject(Router);
+export class AdminComponent implements OnInit {
   
-  usuario = this.authService.obtenerUsuario();
-  estadisticas = {
-    totalUsuarios: 24,
-    pacientesActivos: 15,
-    medicos: 6,
-    citasHoy: 8,
-    ingresosTotales: 12500,
-    citasPendientes: 12
-  };
-
+  usuario: Usuario | null = null;
+  
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
+  
   ngOnInit(): void {
-    // Verificar autenticación y rol
     if (!this.authService.estaAutenticado()) {
-      this.router.navigate(['/login'], { 
-        queryParams: { returnUrl: '/admin-dashboard' }
-      });
+      this.router.navigate(['/login']);
       return;
     }
-
+    
+    this.usuario = this.authService.obtenerUsuario();
+    
     if (!this.authService.esAdministrador()) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/home']);
       return;
     }
-
-    console.log('Admin Dashboard cargado para:', this.usuario?.nombreCompleto);
   }
-
+  
+  // Método para cerrar sesión (llamado salir en el template)
   salir(): void {
     this.authService.cerrarSesion();
     this.router.navigate(['/login']);
-  }
-
-  // Método para obtener estadísticas (simulado por ahora)
-  cargarEstadisticas(): void {
-    console.log('Cargando estadísticas...');
-    // Aquí iría la llamada al backend cuando implementes el servicio
   }
 }

@@ -1,147 +1,75 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms'; // ← IMPORTANTE: Agrega esto
 import { AuthService, AuthResponse, Usuario } from '../../services/auth';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  standalone: true,  // ← Si es standalone
+  imports: [CommonModule, FormsModule], // ← Agrega FormsModule aquí
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
-export class Login implements OnInit {
+export class LoginComponent {
   email: string = '';
   password: string = '';
-  cargando: boolean = false;
-  errorMensaje: string = '';
-  
-  // Credenciales de prueba
-  demoCredentials = [
-    { 
-      tipo: 'Administrador', 
-      correo: 'admin@mjsalud.com', 
-      password: 'admin123',
-      descripcion: 'Acceso completo al sistema'
-    },
-    { 
-      tipo: 'Médico', 
-      correo: 'medico@mjsalud.com', 
-      password: 'medico123',
-      descripcion: 'Gestión de citas y pacientes'
-    },
-    { 
-      tipo: 'Paciente', 
-      correo: 'paciente@mjsalud.com', 
-      password: 'paciente123',
-      descripcion: 'Agendar y ver citas'
-    }
+  isLoading: boolean = false;  // ← cargando -> isLoading
+  errorMessage: string = '';   // ← errorMensaje -> errorMessage
+
+  // Credenciales de demo
+  credencialesDemo = [
+    { email: 'admin@clinica.com', password: 'password123', rol: 'Admin' },
+    { email: 'medico@clinica.com', password: 'password123', rol: 'Médico' },
+    { email: 'paciente@email.com', password: 'password123', rol: 'Paciente' }
   ];
 
-  private authService = inject(AuthService);
-  private router = inject(Router);
-
-  ngOnInit(): void {
-    // Si ya está autenticado, redirigir según rol
-    if (this.authService.estaAutenticado()) {
-      this.redireccionarSegunRol();
-    }
-  }
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   onSubmit(): void {
-    // Validaciones básicas
-    if (!this.email.trim() || !this.password.trim()) {
-      this.errorMensaje = 'Por favor, completa todos los campos.';
+    if (!this.email || !this.password) {
+      this.errorMessage = 'Por favor ingresa email y contraseña';
       return;
     }
 
-    if (!this.validarEmail(this.email)) {
-      this.errorMensaje = 'Por favor, ingresa un correo electrónico válido.';
-      return;
-    }
+    this.isLoading = true;
+    this.errorMessage = '';
 
-    this.cargando = true;
-    this.errorMensaje = '';
-
-    console.log('Intentando login con:', { email: this.email });
-
-    this.authService.login(this.email, this.password).subscribe({
-      next: (response: AuthResponse) => {
-        console.log('Login exitoso:', response);
+    this.authService.login(this.email, this.password)
+      .then((response: AuthResponse) => {
+        this.isLoading = false;
         
-        // Guardar datos en localStorage
-        this.authService.guardarToken(response.token);
-        this.authService.guardarUsuario(response.usuario);
-        
-        this.cargando = false;
-        
-        // Redireccionar según el rol
-        this.redireccionarSegunRol();
-      },
-      error: (error) => {
-        console.error('Error en login:', error);
-        this.cargando = false;
-        
-        // Manejar diferentes tipos de errores
-        if (error.status === 401) {
-          this.errorMensaje = 'Credenciales incorrectas. Por favor, verifica tu correo y contraseña.';
-        } else if (error.status === 0 || error.status === 504) {
-          this.errorMensaje = 'No se puede conectar con el servidor. Verifica que el backend esté ejecutándose en http://localhost:8080';
-        } else if (error.status === 400) {
-          this.errorMensaje = error.error?.message || 'Datos inválidos. Por favor, verifica la información.';
-        } else {
-          this.errorMensaje = `Error en el servidor: ${error.status || 'Desconocido'}. Por favor, intenta más tarde.`;
+        switch(response.usuario.rol) {
+          case 'ADMIN':
+            this.router.navigate(['/admin']);
+            break;
+          case 'MEDICO':
+            this.router.navigate(['/medico']);
+            break;
+          case 'PACIENTE':
+            this.router.navigate(['/citas']);
+            break;
+          default:
+            this.router.navigate(['/home']);
         }
-      }
-    });
+      })
+      .catch((error: any) => {
+        this.isLoading = false;
+        this.errorMessage = error.message || 'Error al iniciar sesión';
+      });
   }
 
-  private redireccionarSegunRol(): void {
-    const usuario = this.authService.obtenerUsuario();
-    
-    if (!usuario) {
-      this.router.navigate(['/']);
-      return;
-    }
-
-    console.log('Redireccionando para rol:', usuario.rol);
-
-    switch (usuario.rol.toUpperCase()) {
-      case 'ADMINISTRADOR':
-        this.router.navigate(['/admin-dashboard']);
-        break;
-      case 'MEDICO':
-        this.router.navigate(['/medico']);
-        break;
-      case 'PACIENTE':
-        this.router.navigate(['/citas']);
-        break;
-      default:
-        console.warn('Rol desconocido:', usuario.rol);
-        this.router.navigate(['/']);
-    }
+  // Método para usar credenciales de demo
+  usarCredencialDemo(cred: any): void {
+    this.email = cred.email;
+    this.password = cred.password;
   }
 
-  private validarEmail(email: string): boolean {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  }
-
-  // Método para usar credenciales de prueba
-  usarCredencialDemo(credencial: any): void {
-    this.email = credencial.correo;
-    this.password = credencial.password;
-    
-    // Auto-enviar después de un breve delay
-    setTimeout(() => {
-      this.onSubmit();
-    }, 300);
-  }
-
-  limpiarFormulario(): void {
-    this.email = '';
-    this.password = '';
-    this.errorMensaje = '';
+  // Método para redirigir a registro
+  irARegistro(): void {
+    this.router.navigate(['/registro']);
   }
 }
