@@ -1,157 +1,116 @@
+/* src/app/components/navbar/navbar.css */
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 60px;
-  background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #000000 0%, #000000 100%);
+  color: white;
+  padding: 15px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .navbar-brand {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   cursor: pointer;
-  text-decoration: none;
-  transition: transform 0.2s;
+  transition: transform 0.3s ease;
 }
 
 .navbar-brand:hover {
-  transform: scale(1.05);
+  transform: translateY(-2px);
 }
 
-.brand-icon {
+.navbar-brand i {
+  font-size: 28px;
+  color: white;
+}
+
+.navbar-brand span {
   font-size: 24px;
-  color: #2563eb;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.brand-name {
-  font-size: 20px;
   font-weight: 700;
-  color: #0f172a;
-  letter-spacing: 0.5px;
-}
-
-.navbar-links {
-  display: flex;
-  gap: 25px;
-  align-items: center;
-}
-
-.nav-link {
-  text-decoration: none;
-  color: #4b5563;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 6px 0;
-  position: relative;
-  transition: color 0.2s;
-}
-
-.nav-link:hover {
-  color: #2563eb;
-}
-
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: #2563eb;
-  transition: width 0.3s;
-}
-
-.nav-link:hover::after {
-  width: 100%;
+  color: white;
 }
 
 .navbar-actions {
   display: flex;
-  align-items: center;
   gap: 15px;
+  align-items: center;
 }
 
-.user-info {
+.btn-navbar {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 10px;
-}
-
-/* Botón negro redondeado */
-.btn-login-nav {
-  background: #050815;
-  color: #ffffff;
-  padding: 10px 28px;
-  border-radius: 999px;
-  border: none;
-  font-size: 14px;
-  font-weight: 500;
+  gap: 8px;
+  transition: all 0.3s ease;
   cursor: pointer;
-  transition: all 0.3s;
-  box-shadow: 0 2px 5px rgba(5, 8, 21, 0.1);
 }
 
-.btn-login-nav:hover {
-  background: #1a1f2e;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(5, 8, 21, 0.2);
-}
-
-.btn-login-nav:active {
-  transform: translateY(0);
-}
-
-/* Botón de logout */
-.btn-logout-nav {
-  background: transparent;
-  color: #ef4444;
-  padding: 8px 20px;
-  border-radius: 999px;
-  border: 1px solid #ef4444;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.btn-logout-nav:hover {
-  background: #ef4444;
+.btn-login {
+  background: rgba(255, 255, 255, 0.15);
   color: white;
-  box-shadow: 0 2px 5px rgba(239, 68, 68, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-login:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.btn-registro {
+  background: white;
+  color: #010101;
+  border: 2px solid white;
+}
+
+.btn-registro:hover {
+  background: #f0f7ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .navbar {
-    padding: 12px 20px;
-    flex-wrap: wrap;
-  }
-
-  .navbar-links {
-    order: 3;
-    width: 100%;
-    margin-top: 15px;
-    justify-content: center;
+  .navbar-container {
+    flex-direction: column;
     gap: 15px;
+    padding: 15px;
   }
 
   .navbar-actions {
-    margin-left: auto;
+    width: 100%;
+    justify-content: center;
   }
 
-  .user-info {
+  .btn-navbar {
+    flex: 1;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-actions {
     flex-direction: column;
-    align-items: flex-end;
-    gap: 5px;
+    width: 100%;
+  }
+
+  .btn-navbar {
+    width: 100%;
   }
 }

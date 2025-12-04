@@ -1,34 +1,19 @@
+<!-- src/app/components/navbar/navbar.html -->
 <nav class="navbar">
   <div class="navbar-container">
-    <!-- Logo/Brand -->
-    <div class="navbar-brand" (click)="redirigirSegunRol()">
+    <!-- Logo/Brand a la izquierda -->
+    <div class="navbar-brand" (click)="irAHome()">
       <i class="fas fa-hospital"></i>
       <span>MJ Salud</span>
     </div>
 
-    <!-- DEBUG: Muestra estado actual -->
-    <div style="color: white; font-size: 12px; background: #666; padding: 5px; border-radius: 4px;">
-      DEBUG: isLoggedIn = {{ isLoggedIn }} | usuario = {{ usuario | json }}
-    </div>
-
-    <!-- User Info (visible cuando está logueado) -->
-    <div class="navbar-user" *ngIf="isLoggedIn && usuario">
-      <div class="user-info">
-        <i class="fas fa-user-circle"></i>
-        <div class="user-details">
-          <span class="user-name">{{ usuario?.nombre }} {{ usuario?.apellido }}</span>
-          <span class="user-rol">({{ usuario?.rol }})</span>
-        </div>
-      </div>
-      <button (click)="cerrarSesion()" class="btn-logout">
-        <i class="fas fa-sign-out-alt"></i> Salir
-      </button>
-    </div>
-
-    <!-- Login button (visible cuando NO está logueado) -->
-    <div class="navbar-actions" *ngIf="!isLoggedIn">
-      <a routerLink="/login" class="btn-login">
+    <!-- Botones a la derecha (SIEMPRE visibles) -->
+    <div class="navbar-actions">
+      <a routerLink="/login" class="btn-navbar btn-login">
         <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+      </a>
+      <a routerLink="/login" class="btn-navbar btn-registro">
+        <i class="fas fa-user-plus"></i> Registrarse
       </a>
     </div>
   </div>
