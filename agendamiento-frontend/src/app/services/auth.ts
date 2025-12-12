@@ -1,7 +1,9 @@
+// src/app/services/auth.ts
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
-// Interfaces necesarias
+// Interfaces
 export interface Usuario {
   id: number;
   username: string;
@@ -9,12 +11,15 @@ export interface Usuario {
   nombre: string;
   apellido: string;
   rol: string;
+  tipo_usuario?: string;
   nombreCompleto?: string;
 }
 
 export interface AuthResponse {
   token: string;
   usuario: Usuario;
+  success?: boolean;
+  message?: string;
 }
 
 @Injectable({
@@ -22,9 +27,47 @@ export interface AuthResponse {
 })
 export class AuthService {
   
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  private apiUrl = 'http://localhost:8080';
   
-  // Métodos para localStorage (seguros para SSR)
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private http: HttpClient
+  ) {}
+  
+  // Método para login - CORREGIDO según tu AuthController
+  login(email: string, password: string): Promise<AuthResponse> {
+    return new Promise((resolve, reject) => {
+      const loginData = {
+        email: email,
+        password: password
+      };
+
+      // Usa la ruta correcta según tu AuthController
+      this.http.post<AuthResponse>(`${this.apiUrl}/api/auth/login`, loginData)
+        .subscribe({
+          next: (response) => {
+            if (response.token && response.usuario) {
+              this.guardarToken(response.token);
+              this.guardarUsuario(response.usuario);
+              resolve(response);
+            } else {
+              reject(new Error('Credenciales inválidas'));
+            }
+          },
+          error: (error) => {
+            if (error.status === 401) {
+              reject(new Error('Email o contraseña incorrectos'));
+            } else if (error.status === 0) {
+              reject(new Error('No se pudo conectar al servidor'));
+            } else {
+              reject(new Error(error.error?.message || 'Error en el servidor'));
+            }
+          }
+        });
+    });
+  }
+  
+  // Métodos de almacenamiento
   private getStorage(): Storage | null {
     if (isPlatformBrowser(this.platformId)) {
       return localStorage;
@@ -32,38 +75,6 @@ export class AuthService {
     return null;
   }
   
-  // Método para login (simulado - debes conectarlo a tu backend)
-  login(email: string, password: string): Promise<AuthResponse> {
-    return new Promise((resolve, reject) => {
-      // Simulación de login - reemplaza con llamada HTTP real
-      setTimeout(() => {
-        if (email && password) {
-          const usuario: Usuario = {
-            id: 1,
-            username: email.split('@')[0],
-            email: email,
-            nombre: 'Usuario',
-            apellido: 'Demo',
-            rol: 'PACIENTE',
-            nombreCompleto: 'Usuario Demo'
-          };
-          
-          const response: AuthResponse = {
-            token: 'fake-jwt-token-' + Date.now(),
-            usuario: usuario
-          };
-          
-          this.guardarToken(response.token);
-          this.guardarUsuario(response.usuario);
-          resolve(response);
-        } else {
-          reject(new Error('Credenciales inválidas'));
-        }
-      }, 1000);
-    });
-  }
-  
-  // Métodos para manejar token
   guardarToken(token: string): void {
     const storage = this.getStorage();
     if (storage) {
@@ -83,7 +94,6 @@ export class AuthService {
     }
   }
   
-  // Métodos para manejar usuario
   guardarUsuario(usuario: Usuario): void {
     const storage = this.getStorage();
     if (storage) {
@@ -107,16 +117,14 @@ export class AuthService {
     }
   }
   
-  // Verificación de autenticación
   estaAutenticado(): boolean {
     const token = this.obtenerToken();
     return token !== null && token !== '';
   }
   
-  // Verificación de rol
   esAdministrador(): boolean {
     const usuario = this.obtenerUsuario();
-    return usuario?.rol === 'ADMIN';
+    return usuario?.rol === 'ADMINISTRADOR';
   }
   
   esMedico(): boolean {
@@ -129,7 +137,6 @@ export class AuthService {
     return usuario?.rol === 'PACIENTE';
   }
   
-  // Cerrar sesión
   cerrarSesion(): void {
     this.eliminarToken();
     this.eliminarUsuario();

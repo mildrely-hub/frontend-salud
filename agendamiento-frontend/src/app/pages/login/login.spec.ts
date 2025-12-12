@@ -1,17 +1,18 @@
+// src/app/pages/login/login.spec.ts
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Login } from './login'; // 👈 Importación corregida a 'Login'
+import { LoginComponent } from './login'; // 👈 Cambia 'Login' por 'LoginComponent'
 
-describe('Login', () => {
-  let component: Login;
-  let fixture: ComponentFixture<Login>;
+describe('LoginComponent', () => { // 👈 Cambia 'Login' por 'LoginComponent'
+  let component: LoginComponent;
+  let fixture: ComponentFixture<LoginComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Login] // 👈 Nombre corregido
+      imports: [LoginComponent] // 👈 Nombre corregido
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Login);
+    fixture = TestBed.createComponent(LoginComponent); // 👈 Cambia 'Login' por 'LoginComponent'
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

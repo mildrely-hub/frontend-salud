@@ -1,20 +1,26 @@
+<!-- src/app/pages/login/login.html -->
 <div class="login-container">
-  <!-- Error message -->
-  <div *ngIf="errorMessage" class="alert alert-error">
-    <strong>⚠️ Error:</strong> {{ errorMessage }}
-  </div>
-
-  <!-- Login Form -->
   <div class="login-card">
-    <h2><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</h2>
+    <!-- Header -->
+    <div class="login-header">
+      <h2><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</h2>
+      <p class="login-subtitle">Ingresa a tu cuenta de MJ Salud</p>
+    </div>
 
+    <!-- Error message -->
+    <div *ngIf="errorMessage" class="alert alert-error">
+      <i class="fas fa-exclamation-circle"></i>
+      <span><strong>Error:</strong> {{ errorMessage }}</span>
+    </div>
+
+    <!-- Login Form -->
     <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
       <div class="form-group">
         <label for="email">
           <i class="fas fa-envelope"></i> Correo Electrónico
         </label>
-        <input type="email" id="email" name="email" [(ngModel)]="email" placeholder="ejemplo@email.com" required
-          [disabled]="isLoading" autocomplete="email" /> <!-- ← CIERRA CON /> -->
+        <input type="email" id="email" name="email" [(ngModel)]="correo" placeholder="ejemplo@email.com" required
+          [disabled]="isLoading" autocomplete="email">
       </div>
 
       <div class="form-group">
@@ -22,10 +28,10 @@
           <i class="fas fa-lock"></i> Contraseña
         </label>
         <input type="password" id="password" name="password" [(ngModel)]="password" placeholder="••••••••" required
-          [disabled]="isLoading" autocomplete="current-password" /> <!-- ← CIERRA CON /> -->
+          [disabled]="isLoading" autocomplete="current-password">
       </div>
 
-      <button type="submit" class="btn-login-primary" [disabled]="isLoading || !email || !password">
+      <button type="submit" class="btn-login-primary" [disabled]="isLoading || !correo || !password">
         <span *ngIf="!isLoading">
           <i class="fas fa-sign-in-alt"></i> Ingresar
         </span>
@@ -34,21 +40,6 @@
         </span>
       </button>
     </form>
-
-    <!-- Credenciales de Demo -->
-    <div class="demo-section">
-      <h4><i class="fas fa-vial"></i> Credenciales de Prueba</h4>
-      <div class="demo-credentials">
-        <div *ngFor="let cred of credencialesDemo" class="demo-option" (click)="usarCredencialDemo(cred)">
-          <strong>{{ cred.rol }}</strong><br>
-          <small>{{ cred.email }}</small>
-        </div>
-      </div>
-      <p class="demo-note">
-        <i class="fas fa-info-circle"></i>
-        Usa estas credenciales para probar el sistema. Contraseña: <code>password123</code>
-      </p>
-    </div>
 
     <!-- Footer -->
     <div class="login-footer">

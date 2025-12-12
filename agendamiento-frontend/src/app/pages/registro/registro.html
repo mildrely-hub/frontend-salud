@@ -1,178 +1,369 @@
 <!-- src/app/pages/registro/registro.html -->
 <div class="registro-container">
-    <div class="registro-card">
-        <div class="header">
-            <h1><i class="fas fa-user-plus"></i> Crear Cuenta</h1>
-            <p class="subtitle">Regístrate para acceder al sistema de citas médicas</p>
+    <div class="registro-wrapper">
+        <!-- Panel Izquierdo - Ilustración/Branding -->
+        <div class="registro-side-panel">
+            <div class="side-panel-content">
+                <div class="logo">
+                    <i class="fas fa-stethoscope"></i>
+                    <h1>MJ<span>Salud</span></h1>
+                </div>
+
+                <div class="illustration">
+                    <div class="illustration-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h2>Tu salud en buenas manos</h2>
+                    <p>Únete a miles de pacientes y profesionales que confían en nuestro sistema</p>
+                </div>
+
+
+            </div>
         </div>
 
-        <!-- Mensajes de error/éxito -->
-        <div *ngIf="errorMessage" class="alert alert-error">
-            <i class="fas fa-exclamation-circle"></i> {{ errorMessage }}
+        <!-- Panel Derecho - Formulario -->
+        <div class="registro-main-panel">
+            <div class="main-panel-header">
+                <a [routerLink]="['/login']" class="back-button">
+                    <i class="fas fa-arrow-left"></i>
+                    Volver
+                </a>
+
+            </div>
+
+            <div class="registro-form-container">
+                <!-- Encabezado del formulario -->
+                <div class="form-header">
+                    <h2>Crea tu cuenta</h2>
+                    <p>Completa tus datos para comenzar</p>
+                </div>
+
+                <!-- Mensajes de estado -->
+                <div *ngIf="errorMessage" class="alert alert-error slide-in">
+                    <div class="alert-icon">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="alert-content">
+                        <strong>Error</strong>
+                        <p>{{ errorMessage }}</p>
+                    </div>
+                    <button class="alert-close" (click)="errorMessage = ''">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div *ngIf="successMessage" class="alert alert-success slide-in">
+                    <div class="alert-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="alert-content">
+                        <strong>¡Éxito!</strong>
+                        <p>{{ successMessage }}</p>
+                    </div>
+                </div>
+
+                <form (ngSubmit)="onSubmit()" #registroForm="ngForm" class="modern-form">
+                    <!-- Selección de Tipo de Cuenta -->
+                    <div class="form-section">
+                        <label class="section-label">
+                            <i class="fas fa-user-tag"></i>
+                            ¿Qué tipo de cuenta necesitas?
+                        </label>
+                        <div class="account-type-selector">
+                            <div class="account-type" [class.selected]="rol === 'PACIENTE'" (click)="rol = 'PACIENTE'">
+                                <div class="account-type-icon">
+                                    <i class="fas fa-user-injured"></i>
+                                </div>
+                                <div class="account-type-content">
+                                    <h4>Paciente</h4>
+
+                                </div>
+                                <div class="account-type-selector">
+                                    <div class="custom-radio" [class.checked]="rol === 'PACIENTE'"></div>
+                                </div>
+                            </div>
+
+                            <div class="account-type" [class.selected]="rol === 'MEDICO'" (click)="rol = 'MEDICO'">
+                                <div class="account-type-icon">
+                                    <i class="fas fa-user-md"></i>
+                                </div>
+                                <div class="account-type-content">
+                                    <h4>Médico</h4>
+
+                                </div>
+                                <div class="account-type-selector">
+                                    <div class="custom-radio" [class.checked]="rol === 'MEDICO'"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Información Personal -->
+                    <div class="form-section">
+                        <label class="section-label">
+                            <i class="fas fa-id-card"></i>
+                            Información personal
+                        </label>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="nombre" class="form-label">
+                                    <span class="label-text">Nombre</span>
+                                    <span class="required-indicator">*</span>
+                                </label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="nombre" [(ngModel)]="nombre" name="nombre"
+                                        placeholder="Ingresa tu nombre" required class="modern-input"
+                                        [class.error]="errorMessage && !nombre.trim()">
+                                </div>
+                                <div class="input-hint">
+                                    <i class="fas fa-info-circle"></i>
+                                    Ej: Juan Carlos
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="apellido" class="form-label">
+                                    <span class="label-text">Apellido</span>
+                                    <span class="required-indicator">*</span>
+                                </label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="apellido" [(ngModel)]="apellido" name="apellido"
+                                        placeholder="Ingresa tu apellido" required class="modern-input"
+                                        [class.error]="errorMessage && !apellido.trim()">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="correo" class="form-label">
+                                    <span class="label-text">Correo electrónico</span>
+                                    <span class="required-indicator">*</span>
+                                </label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-envelope"></i>
+                                    <input type="email" id="correo" [(ngModel)]="correo" name="correo"
+                                        placeholder="tucorreo@ejemplo.com" required class="modern-input"
+                                        [class.error]="errorMessage && (!correo.trim() || !correo.includes('@'))">
+                                </div>
+                                <div class="input-hint">
+                                    <i class="fas fa-shield-alt"></i>
+                                    Tu información está protegida
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="telefono" class="form-label">
+                                    <span class="label-text">Teléfono</span>
+                                    <span class="required-indicator">*</span>
+                                </label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-phone"></i>
+                                    <input type="tel" id="telefono" [(ngModel)]="telefono" name="telefono"
+                                        placeholder="912345678" required maxlength="9" class="modern-input"
+                                        [class.error]="errorMessage && (!telefono || !validarTelefono())">
+                                </div>
+                                <div class="input-hint">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    9 dígitos sin espacios
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="direccion" class="form-label">
+                                <span class="label-text">Dirección</span>
+                                <span class="required-indicator">*</span>
+                            </label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <input type="text" id="direccion" [(ngModel)]="direccion" name="direccion"
+                                    placeholder="Calle, número, ciudad" required class="modern-input"
+                                    [class.error]="errorMessage && (!direccion || direccion.trim().length === 0)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Seguridad -->
+                    <div class="form-section">
+                        <label class="section-label">
+                            <i class="fas fa-lock"></i>
+                            Seguridad de la cuenta
+                        </label>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="password" class="form-label">
+                                    <span class="label-text">Contraseña</span>
+                                    <span class="required-indicator">*</span>
+                                </label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-key"></i>
+                                    <input [type]="showPassword ? 'text' : 'password'" id="password"
+                                        [(ngModel)]="password" name="password" placeholder="Mínimo 6 caracteres"
+                                        required class="modern-input"
+                                        [class.error]="errorMessage && (!password || password.length < 6)">
+                                    <button type="button" class="password-toggle-btn"
+                                        (click)="togglePasswordVisibility()">
+                                        <i class="fas" [class.fa-eye]="!showPassword"
+                                            [class.fa-eye-slash]="showPassword"></i>
+                                    </button>
+                                </div>
+
+                                <!-- Indicador de fortaleza -->
+                                <div *ngIf="password" class="password-strength-indicator">
+                                    <div class="strength-labels">
+                                        <span [class.active]="getPasswordStrength() >= 25">Débil</span>
+                                        <span [class.active]="getPasswordStrength() >= 50">Regular</span>
+                                        <span [class.active]="getPasswordStrength() >= 75">Fuerte</span>
+                                        <span [class.active]="getPasswordStrength() >= 95">Excelente</span>
+                                    </div>
+                                    <div class="strength-bar">
+                                        <div class="strength-progress" [style.width]="getPasswordStrength() + '%'"
+                                            [style.background]="getPasswordStrengthColor()">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="confirmPassword" class="form-label">
+                                    <span class="label-text">Confirmar contraseña</span>
+                                    <span class="required-indicator">*</span>
+                                </label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-key"></i>
+                                    <input [type]="showConfirmPassword ? 'text' : 'password'" id="confirmPassword"
+                                        [(ngModel)]="confirmPassword" name="confirmPassword"
+                                        placeholder="Repite tu contraseña" required class="modern-input"
+                                        [class.error]="errorMessage && (!passwordsMatch())">
+                                    <button type="button" class="password-toggle-btn"
+                                        (click)="toggleConfirmPasswordVisibility()">
+                                        <i class="fas" [class.fa-eye]="!showConfirmPassword"
+                                            [class.fa-eye-slash]="showConfirmPassword"></i>
+                                    </button>
+                                </div>
+                                <div *ngIf="confirmPassword && !passwordsMatch()" class="password-match-error">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    Las contraseñas no coinciden
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Información Adicional (Opcional) -->
+                    <div class="form-section optional-section">
+                        <div class="section-toggle" (click)="toggleOptionalSection()">
+                            <label class="section-label">
+                                <i class="fas fa-plus-circle"></i>
+                                Información adicional (opcional)
+                                <span class="toggle-arrow">
+                                    <i class="fas" [class.fa-chevron-down]="!showOptional"
+                                        [class.fa-chevron-up]="showOptional"></i>
+                                </span>
+                            </label>
+                        </div>
+
+                        <div *ngIf="showOptional" class="optional-content slide-down">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="dni" class="form-label">
+                                        <span class="label-text">DNI</span>
+                                    </label>
+                                    <div class="input-with-icon">
+                                        <i class="fas fa-id-card"></i>
+                                        <input type="text" id="dni" [(ngModel)]="dni" name="dni"
+                                            placeholder="Número de identificación" class="modern-input">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="fechaNacimiento" class="form-label">
+                                        <span class="label-text">Fecha de nacimiento</span>
+                                    </label>
+                                    <div class="input-with-icon">
+                                        <i class="fas fa-calendar-alt"></i>
+                                        <input type="date" id="fechaNacimiento" [(ngModel)]="fechaNacimiento"
+                                            name="fechaNacimiento" class="modern-input">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">
+                                    <span class="label-text">Género</span>
+                                </label>
+                                <div class="gender-selector">
+                                    <label class="gender-option" [class.selected]="genero === 'MASCULINO'">
+                                        <input type="radio" name="genero" [(ngModel)]="genero" value="MASCULINO" hidden>
+                                        <i class="fas fa-mars"></i>
+                                        <span>Masculino</span>
+                                    </label>
+                                    <label class="gender-option" [class.selected]="genero === 'FEMENINO'">
+                                        <input type="radio" name="genero" [(ngModel)]="genero" value="FEMENINO" hidden>
+                                        <i class="fas fa-venus"></i>
+                                        <span>Femenino</span>
+                                    </label>
+                                    <label class="gender-option" [class.selected]="genero === 'OTRO'">
+                                        <input type="radio" name="genero" [(ngModel)]="genero" value="OTRO" hidden>
+                                        <i class="fas fa-transgender-alt"></i>
+                                        <span>Otro</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Términos y condiciones -->
+                    <div class="terms-section">
+                        <label class="checkbox-container">
+                            <input type="checkbox" required>
+                            <span class="checkmark"></span>
+                            <span class="terms-text">
+                                Acepto los
+                                <a href="#" class="terms-link">Términos de servicio</a>
+                                y la
+                                <a href="#" class="terms-link">Política de privacidad</a>
+                            </span>
+                        </label>
+                    </div>
+
+                    <!-- Botón de envío -->
+                    <div class="form-actions">
+                        <button type="submit" class="submit-button" [disabled]="isLoading" [class.loading]="isLoading">
+                            <span *ngIf="!isLoading">
+                                <i class="fas fa-user-plus"></i>
+                                Crear cuenta
+                            </span>
+                            <span *ngIf="isLoading">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                Creando cuenta...
+                            </span>
+                        </button>
+
+                        <div class="login-redirect">
+                            <span>¿Ya tienes una cuenta?</span>
+                            <a [routerLink]="['/login']" class="login-link">
+                                <i class="fas fa-sign-in-alt"></i>
+                                Inicia sesión
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Footer del formulario -->
+            <div class="form-footer">
+                <p>© 2024 MediCarePlus. Todos los derechos reservados.</p>
+                <div class="footer-links">
+                    <a href="#">Ayuda</a>
+                    <a href="#">Contacto</a>
+                    <a href="#">Privacidad</a>
+                </div>
+            </div>
         </div>
-
-        <div *ngIf="successMessage" class="alert alert-success">
-            <i class="fas fa-check-circle"></i> {{ successMessage }}
-        </div>
-
-        <form (ngSubmit)="onSubmit()" #registroForm="ngForm">
-            <!-- Datos personales -->
-            <div class="form-section">
-                <h3><i class="fas fa-user"></i> Datos Personales</h3>
-
-                <div class="row">
-                    <div class="form-group col">
-                        <label for="nombre">
-                            <i class="fas fa-user"></i> Nombre *
-                        </label>
-                        <input type="text" id="nombre" name="nombre" [(ngModel)]="nombre" required
-                            placeholder="Ingresa tu nombre">
-                    </div>
-
-                    <div class="form-group col">
-                        <label for="apellido">
-                            <i class="fas fa-user"></i> Apellido *
-                        </label>
-                        <input type="text" id="apellido" name="apellido" [(ngModel)]="apellido" required
-                            placeholder="Ingresa tu apellido">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-group col">
-                        <label for="email">
-                            <i class="fas fa-envelope"></i> Email *
-                        </label>
-                        <input type="email" id="email" name="email" [(ngModel)]="email" required
-                            placeholder="ejemplo@email.com">
-                    </div>
-
-                    <div class="form-group col">
-                        <label for="telefono">
-                            <i class="fas fa-phone"></i> Teléfono
-                        </label>
-                        <input type="tel" id="telefono" name="telefono" [(ngModel)]="telefono" placeholder="8888-8888">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-group col">
-                        <label for="fechaNacimiento">
-                            <i class="fas fa-birthday-cake"></i> Fecha de Nacimiento
-                        </label>
-                        <input type="date" id="fechaNacimiento" name="fechaNacimiento" [(ngModel)]="fechaNacimiento">
-                    </div>
-
-                    <div class="form-group col">
-                        <label for="genero">
-                            <i class="fas fa-venus-mars"></i> Género
-                        </label>
-                        <select id="genero" name="genero" [(ngModel)]="genero">
-                            <option value="">Seleccionar</option>
-                            <option value="masculino">Masculino</option>
-                            <option value="femenino">Femenino</option>
-                            <option value="otro">Otro</option>
-                            <option value="prefiero-no-decir">Prefiero no decir</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tipo de usuario -->
-            <div class="form-section">
-                <h3><i class="fas fa-user-tag"></i> Tipo de Usuario</h3>
-                <div class="form-group">
-                    <div class="tipo-usuario-options">
-                        <label class="option-card" [class.selected]="tipoUsuario === 'paciente'">
-                            <input type="radio" name="tipoUsuario" value="paciente" [(ngModel)]="tipoUsuario" checked>
-                            <div class="option-content">
-                                <i class="fas fa-user-injured"></i>
-                                <span>Paciente</span>
-                                <small>Agenda citas médicas</small>
-                            </div>
-                        </label>
-
-                        <label class="option-card" [class.selected]="tipoUsuario === 'medico'">
-                            <input type="radio" name="tipoUsuario" value="medico" [(ngModel)]="tipoUsuario">
-                            <div class="option-content">
-                                <i class="fas fa-user-md"></i>
-                                <span>Médico</span>
-                                <small>Atiende pacientes</small>
-                            </div>
-                        </label>
-
-                        <label class="option-card" [class.selected]="tipoUsuario === 'admin'">
-                            <input type="radio" name="tipoUsuario" value="admin" [(ngModel)]="tipoUsuario">
-                            <div class="option-content">
-                                <i class="fas fa-user-shield"></i>
-                                <span>Administrador</span>
-                                <small>Gestiona el sistema</small>
-                            </div>
-                        </label>
-                    </div>
-                    <small class="note">* El rol de Admin requiere autorización especial</small>
-                </div>
-            </div>
-
-            <!-- Contraseñas -->
-            <div class="form-section">
-                <h3><i class="fas fa-lock"></i> Seguridad</h3>
-
-                <div class="row">
-                    <div class="form-group col">
-                        <label for="password">
-                            <i class="fas fa-key"></i> Contraseña *
-                        </label>
-                        <input type="password" id="password" name="password" [(ngModel)]="password" required
-                            placeholder="Mínimo 6 caracteres">
-                    </div>
-
-                    <div class="form-group col">
-                        <label for="confirmPassword">
-                            <i class="fas fa-key"></i> Confirmar Contraseña *
-                        </label>
-                        <input type="password" id="confirmPassword" name="confirmPassword" [(ngModel)]="confirmPassword"
-                            required placeholder="Repite tu contraseña">
-                    </div>
-                </div>
-
-                <div class="password-strength" *ngIf="password">
-                    <div class="strength-bar">
-                        <div class="strength-level" [style.width.%]="getPasswordStrength()"></div>
-                    </div>
-                    <small class="strength-text">
-                        Fortaleza: {{ getPasswordStrengthText() }}
-                    </small>
-                </div>
-            </div>
-
-            <!-- Términos y condiciones -->
-            <div class="form-section terms">
-                <div class="form-group">
-                    <label class="checkbox-label">
-                        <input type="checkbox" required>
-                        <span>Acepto los <a href="#">Términos y Condiciones</a> y la <a href="#">Política de
-                                Privacidad</a></span>
-                    </label>
-                </div>
-            </div>
-
-            <!-- Botones -->
-            <div class="form-actions">
-                <button type="button" class="btn-volver" (click)="volverAlLogin()">
-                    <i class="fas fa-arrow-left"></i> Volver al Login
-                </button>
-                <button type="submit" class="btn-registrar" [disabled]="isLoading || !registroForm.form.valid">
-                    <i class="fas" [class.fa-spinner]="isLoading" [class.fa-spin]="isLoading"
-                        [class.fa-user-plus]="!isLoading"></i>
-                    {{ isLoading ? 'Registrando...' : 'Crear Cuenta' }}
-                </button>
-            </div>
-
-            <!-- Enlace a login -->
-            <div class="login-link">
-                <p>¿Ya tienes una cuenta? <a routerLink="/login">Inicia sesión aquí</a></p>
-            </div>
-        </form>
     </div>
 </div>
