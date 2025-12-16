@@ -1,127 +1,231 @@
 <!-- src/app/pages/citas/citas.html -->
 <div class="citas-container">
-    <div class="header-section">
-        <h1><i class="fas fa-calendar-check"></i> Mis Citas Médicas</h1>
-        <div class="user-welcome">
-            <span class="welcome-text">Bienvenido/a, </span>
-            <span class="user-name">{{ usuario?.nombre || usuario?.nombreCompleto || 'Paciente' }}</span>
+    <!-- Header -->
+    <div class="citas-header">
+        <div class="header-left">
+            <button class="btn-back" routerLink="/dashboard">
+                <i class="fas fa-arrow-left"></i> Volver
+            </button>
+            <h1><i class="fas fa-calendar-plus"></i> Agendar Cita Médica</h1>
+        </div>
+
+        <div class="header-right">
+            <button class="btn-mis-citas" (click)="verMisCitas()">
+                <i class="fas fa-history"></i> Mis Citas
+            </button>
+            <div class="user-info">
+                <i class="fas fa-user-circle"></i>
+                <span>{{ usuario?.nombreCompleto || 'Usuario' }}</span>
+            </div>
         </div>
     </div>
 
-    <div class="content-section">
-        <div class="section-header">
-            <h2><i class="fas fa-list"></i> Mis Citas Programadas</h2>
-            <!-- Opción 1: Con routerLink -->
-            <a routerLink="/citas/agendar" class="btn-agendar">
-                <i class="fas fa-plus-circle"></i> Agendar Nueva Cita
-            </a>
-            <!-- Opción 2: Con método (click) - descomenta si prefieres -->
-            <!-- 
-      <button class="btn-agendar" (click)="irAAgendarCita()">
-        <i class="fas fa-plus-circle"></i> Agendar Nueva Cita
-      </button>
-      -->
+    <!-- Contenido principal -->
+    <div class="citas-content">
+        <!-- Paso actual -->
+        <div class="progress-steps">
+            <div class="step" [class.active]="pasoActual === 1" [class.completed]="pasoActual > 1">
+                <div class="step-number">1</div>
+                <div class="step-label">Seleccionar Médico</div>
+            </div>
+
+            <div class="step" [class.active]="pasoActual === 2" [class.completed]="pasoActual > 2">
+                <div class="step-number">2</div>
+                <div class="step-label">Elegir Fecha</div>
+            </div>
+
+            <div class="step" [class.active]="pasoActual === 3" [class.completed]="pasoActual > 3">
+                <div class="step-number">3</div>
+                <div class="step-label">Seleccionar Hora</div>
+            </div>
+
+            <div class="step" [class.active]="pasoActual === 4">
+                <div class="step-number">4</div>
+                <div class="step-label">Confirmar Cita</div>
+            </div>
         </div>
 
-        <div class="table-responsive">
-            <table class="citas-table">
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Hora</th>
-                        <th>Médico</th>
-                        <th>Especialidad</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>4/12/2025</td>
-                        <td>09:00</td>
-                        <td>Dr. Carlos Rodríguez</td>
-                        <td><span class="badge especialidad">Cardiología</span></td>
-                        <td><span class="badge confirmada">Confirmada</span></td>
-                        <td>
-                            <button class="btn-action btn-ver" title="Ver detalles"
-                                (click)="verDetallesCita({fecha: '4/12/2025', medico: 'Dr. Carlos Rodríguez', estado: 'Confirmada'})">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="btn-action btn-cancelar" title="Cancelar cita"
-                                (click)="cancelarCita({fecha: '4/12/2025', medico: 'Dr. Carlos Rodríguez', estado: 'Confirmada'})">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>9/12/2025</td>
-                        <td>14:30</td>
-                        <td>Dr. Luis Gómez</td>
-                        <td><span class="badge especialidad">Medicina General</span></td>
-                        <td><span class="badge pendiente">Pendiente</span></td>
-                        <td>
-                            <button class="btn-action btn-ver" title="Ver detalles"
-                                (click)="verDetallesCita({fecha: '9/12/2025', medico: 'Dr. Luis Gómez', estado: 'Pendiente'})">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="btn-action btn-cancelar" title="Cancelar cita"
-                                (click)="cancelarCita({fecha: '9/12/2025', medico: 'Dr. Luis Gómez', estado: 'Pendiente'})">
-                                <i class="fas fa-times"></i>
-                            </button>
-                            <button class="btn-action btn-confirmar" title="Confirmar cita"
-                                (click)="confirmarCita({fecha: '9/12/2025', medico: 'Dr. Luis Gómez', estado: 'Pendiente'})">
-                                <i class="fas fa-check"></i>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr class="cita-pasada">
-                        <td>1/12/2025</td>
-                        <td>11:00</td>
-                        <td>Dra. Ana Martínez</td>
-                        <td><span class="badge especialidad">Dermatología</span></td>
-                        <td><span class="badge completada">Completada</span></td>
-                        <td>
-                            <button class="btn-action btn-ver" title="Ver detalles"
-                                (click)="verDetallesCita({fecha: '1/12/2025', medico: 'Dra. Ana Martínez', estado: 'Completada'})">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="btn-action btn-historial" title="Ver historial">
-                                <i class="fas fa-file-medical"></i>
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <!-- Paso 1: Seleccionar Médico -->
+        <div *ngIf="pasoActual === 1" class="step-content">
+            <h2>Selecciona un Médico</h2>
+            <p>Elige el especialista que necesitas consultar</p>
+
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Buscar médico por especialidad o nombre..."
+                    [(ngModel)]="busquedaMedico">
+            </div>
+
+            <div class="medicos-grid">
+                <div *ngFor="let medico of medicosFiltrados" class="medico-card"
+                    [class.selected]="medicoSeleccionado?.id === medico.id" (click)="seleccionarMedico(medico)">
+                    <div class="medico-avatar">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="medico-info">
+                        <h3>Dr. {{ medico.nombreCompleto }}</h3>
+                        <p class="especialidad">{{ medico.especialidad }}</p>
+                        <div class="medico-details">
+                            <span><i class="fas fa-graduation-cap"></i> {{ medico.experiencia }} años exp.</span>
+                            <span><i class="fas fa-star"></i> {{ medico.calificacion }}/5</span>
+                        </div>
+                        <p class="descripcion">{{ medico.descripcion }}</p>
+                    </div>
+                    <div class="medico-select">
+                        <i class="fas fa-check-circle" *ngIf="medicoSeleccionado?.id === medico.id"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-actions">
+                <button class="btn-next" [disabled]="!medicoSeleccionado" (click)="siguientePaso()">
+                    Siguiente <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
         </div>
 
-        <div class="stats-section">
-            <div class="stat-card">
-                <div class="stat-icon confirmada">
-                    <i class="fas fa-calendar-check"></i>
+        <!-- Paso 2: Elegir Fecha -->
+        <div *ngIf="pasoActual === 2" class="step-content">
+            <h2>Selecciona una Fecha</h2>
+            <p>Elige el día para tu consulta</p>
+
+            <div class="calendar-container">
+                <div class="calendar-header">
+                    <button (click)="mesAnterior()"><i class="fas fa-chevron-left"></i></button>
+                    <h3>{{ mesActual | date:'MMMM yyyy' | titlecase }}</h3>
+                    <button (click)="mesSiguiente()"><i class="fas fa-chevron-right"></i></button>
                 </div>
-                <div class="stat-info">
-                    <h3>2</h3>
-                    <p>Citas Confirmadas</p>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon pendiente">
-                    <i class="fas fa-clock"></i>
-                </div>
-                <div class="stat-info">
-                    <h3>1</h3>
-                    <p>Citas Pendientes</p>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon completada">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                <div class="stat-info">
-                    <h3>1</h3>
-                    <p>Citas Completadas</p>
+
+                <div class="calendar-grid">
+                    <div class="calendar-day-header" *ngFor="let dia of diasSemana">
+                        {{ dia }}
+                    </div>
+                    <div *ngFor="let dia of diasMes" class="calendar-day" [class.disabled]="!dia.disponible"
+                        [class.selected]="fechaSeleccionada === dia.fecha"
+                        (click)="dia.disponible ? seleccionarFecha(dia.fecha) : null">
+                        <span>{{ dia.numero }}</span>
+                        <div *ngIf="dia.disponible" class="day-indicator">
+                            <i class="fas fa-circle"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <div class="step-actions">
+                <button class="btn-back" (click)="pasoAnterior()">
+                    <i class="fas fa-arrow-left"></i> Atrás
+                </button>
+                <button class="btn-next" [disabled]="!fechaSeleccionada" (click)="siguientePaso()">
+                    Siguiente <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Paso 3: Seleccionar Hora -->
+        <div *ngIf="pasoActual === 3" class="step-content">
+            <h2>Selecciona un Horario</h2>
+            <p>Elige la hora para tu cita el {{ fechaSeleccionada | date:'fullDate' }}</p>
+
+            <div class="horarios-grid">
+                <div *ngFor="let horario of horariosDisponibles" class="horario-card"
+                    [class.selected]="horaSeleccionada === horario" (click)="seleccionarHora(horario)">
+                    <div class="horario-time">{{ horario }}</div>
+                    <div class="horario-status">
+                        <i class="fas fa-clock"></i> Disponible
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-actions">
+                <button class="btn-back" (click)="pasoAnterior()">
+                    <i class="fas fa-arrow-left"></i> Atrás
+                </button>
+                <button class="btn-next" [disabled]="!horaSeleccionada" (click)="siguientePaso()">
+                    Siguiente <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Paso 4: Confirmar Cita -->
+        <div *ngIf="pasoActual === 4" class="step-content">
+            <h2>Confirmar Cita Médica</h2>
+            <p>Revisa los detalles de tu cita</p>
+
+            <div class="resumen-cita">
+                <div class="resumen-card">
+                    <div class="resumen-section">
+                        <h3><i class="fas fa-user-md"></i> Médico</h3>
+                        <div class="resumen-detail">
+                            <strong>Dr. {{ medicoSeleccionado?.nombreCompleto }}</strong>
+                            <p>{{ medicoSeleccionado?.especialidad }}</p>
+                            <p><i class="fas fa-star"></i> Calificación: {{ medicoSeleccionado?.calificacion }}/5</p>
+                        </div>
+                    </div>
+
+                    <div class="resumen-section">
+                        <h3><i class="fas fa-calendar-alt"></i> Fecha y Hora</h3>
+                        <div class="resumen-detail">
+                            <strong>{{ fechaSeleccionada | date:'fullDate' }}</strong>
+                            <p><i class="fas fa-clock"></i> Hora: {{ horaSeleccionada }}</p>
+                            <p><i class="fas fa-clock"></i> Duración: 30 minutos</p>
+                        </div>
+                    </div>
+
+                    <div class="resumen-section">
+                        <h3><i class="fas fa-info-circle"></i> Información Adicional</h3>
+                        <div class="resumen-detail">
+                            <label for="sintomas">Síntomas o motivo de consulta:</label>
+                            <textarea id="sintomas" [(ngModel)]="sintomas"
+                                placeholder="Describe brevemente tus síntomas..."></textarea>
+
+                            <label for="preferencias">Preferencias adicionales:</label>
+                            <input type="text" id="preferencias" [(ngModel)]="preferencias"
+                                placeholder="Ej: Consulta por videollamada">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-actions">
+                <button class="btn-back" (click)="pasoAnterior()">
+                    <i class="fas fa-arrow-left"></i> Atrás
+                </button>
+                <button class="btn-confirm" (click)="confirmarCita()" [disabled]="isLoading">
+                    <span *ngIf="!isLoading">
+                        <i class="fas fa-calendar-check"></i> Confirmar Cita
+                    </span>
+                    <span *ngIf="isLoading">
+                        <i class="fas fa-spinner fa-spin"></i> Procesando...
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de éxito -->
+<div *ngIf="mostrarExito" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <h2>¡Cita Agendada Exitosamente!</h2>
+        <p>Tu cita ha sido registrada. Recibirás un correo de confirmación.</p>
+
+        <div class="cita-confirmada">
+            <p><strong>ID de Cita:</strong> {{ citaConfirmada?.id }}</p>
+            <p><strong>Médico:</strong> Dr. {{ medicoSeleccionado?.nombreCompleto }}</p>
+            <p><strong>Fecha:</strong> {{ fechaSeleccionada | date:'fullDate' }}</p>
+            <p><strong>Hora:</strong> {{ horaSeleccionada }}</p>
+        </div>
+
+        <div class="modal-actions">
+            <button class="btn-secondary" (click)="cerrarModal()">
+                Ver Mis Citas
+            </button>
+            <button class="btn-primary" (click)="nuevaCita()">
+                Agendar Otra Cita
+            </button>
         </div>
     </div>
 </div>

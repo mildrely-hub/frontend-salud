@@ -1,12 +1,10 @@
-// src/app/app.routes.ts
 import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home';
 import { LoginComponent } from './pages/login/login';
 import { AdminComponent } from './pages/admin/resumen';
 import { Usuarios } from './pages/usuarios/usuarios';
 import { CitasComponent } from './pages/citas/citas';
-// CORREGIR ESTA LÍNEA:
-import { AgendarCitaComponent } from './pages/citas/agendar-citas/agendar-cita'; // ← "agendar-citas" con "s"
+import { AgendarCitaComponent } from './pages/citas/agendar-citas/agendar-cita';
 import { RegistroComponent } from './pages/registro/registro';
 
 export const routes: Routes = [
@@ -16,7 +14,10 @@ export const routes: Routes = [
   { path: 'admin', component: AdminComponent },
   { path: 'usuarios', component: Usuarios },
   { path: 'citas', component: CitasComponent },
-  { path: 'citas/agendar', component: AgendarCitaComponent },
+  
+  // 🔥 ESTA ES LA RUTA CORRECTA:
+  { path: 'citas/agendar-cita', component: AgendarCitaComponent },
+  
   { path: 'registro', component: RegistroComponent },
   { path: '**', redirectTo: '/home' }
 ];

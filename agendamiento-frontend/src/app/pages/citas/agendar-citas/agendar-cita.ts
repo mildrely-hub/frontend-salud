@@ -128,4 +128,8 @@ export class AgendarCitaComponent implements OnInit {
       this.router.navigate(['/citas']);
     }
   }
+
+  volverACitas(): void {
+    this.router.navigate(['/citas']);
+  }
 }
