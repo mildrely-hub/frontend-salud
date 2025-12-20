@@ -15,7 +15,7 @@ export const routes: Routes = [
   { path: 'usuarios', component: Usuarios },
   { path: 'citas', component: CitasComponent },
   
-  // 🔥 ESTA ES LA RUTA CORRECTA:
+  // Esta ruta carga el componente de la imagen (Agendar Nueva Cita)
   { path: 'citas/agendar-cita', component: AgendarCitaComponent },
   
   { path: 'registro', component: RegistroComponent },

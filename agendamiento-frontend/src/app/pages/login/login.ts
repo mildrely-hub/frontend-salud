@@ -42,7 +42,7 @@ export class LoginComponent {
           this.isLoading = false;
           
           if (response.token) {
-            // Guardar token y datos del usuario
+            // Guardamos token y datos del usuario
             localStorage.setItem('token', response.token);
             localStorage.setItem('usuario', JSON.stringify(response.usuario));
             localStorage.setItem('rolUsuario', response.usuario.rol);
@@ -61,10 +61,14 @@ export class LoginComponent {
   private redirigirSegunRol(usuario: any): void {
     const rol = (usuario.rol || '').toUpperCase();
     
+    // REDIRECCIÓN CORREGIDA: 
+    // Para que te lleve a la pantalla de los 4 pasos (CitasComponent)
     if (rol === 'PACIENTE') {
-      this.router.navigate(['/citas/agendar-cita']);
+      this.router.navigate(['/citas']); 
+    } else if (rol === 'ADMIN') {
+      this.router.navigate(['/admin']);
     } else {
-      this.router.navigate(['/citas']);
+      this.router.navigate(['/home']);
     }
   }
 
