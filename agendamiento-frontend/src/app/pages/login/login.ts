@@ -17,10 +17,7 @@ export class LoginComponent {
   isLoading: boolean = false;
   errorMessage: string = '';
 
-  constructor(
-    private router: Router,
-    private http: HttpClient
-  ) {}
+  constructor(private router: Router, private http: HttpClient) {}
 
   onSubmit(): void {
     if (!this.correo || !this.password) {
@@ -32,50 +29,49 @@ export class LoginComponent {
     this.errorMessage = '';
 
     const loginData = {
-      correo: this.correo,
+      correo: this.correo.trim(),
       password: this.password
     };
 
-    this.http.post('http://localhost:8080/api/auth/login', loginData)
-      .subscribe({
-        next: (response: any) => {
-          this.isLoading = false;
+    this.http.post('http://localhost:8080/api/auth/login', loginData).subscribe({
+      next: (response: any) => {
+        this.isLoading = false;
+        if (response.token) {
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('usuario', JSON.stringify(response.usuario));
           
-          if (response.token) {
-            // Guardamos token y datos del usuario
-            localStorage.setItem('token', response.token);
-            localStorage.setItem('usuario', JSON.stringify(response.usuario));
-            localStorage.setItem('rolUsuario', response.usuario.rol);
-            localStorage.setItem('idUsuario', response.usuario.id);
-            
-            this.redirigirSegunRol(response.usuario);
-          }
-        },
-        error: (error) => {
-          this.isLoading = false;
-          this.errorMessage = this.obtenerMensajeError(error);
+          // Obtener el rol directamente del objeto usuario de la respuesta
+          const rol = response.usuario.rol;
+          this.redirigirSegunRol(rol);
         }
-      });
+      },
+      error: (error) => {
+        this.isLoading = false;
+        console.error('Error de autenticación:', error);
+        this.errorMessage = 'Credenciales inválidas. Intente de nuevo.';
+      }
+    });
   }
 
-  private redirigirSegunRol(usuario: any): void {
-    const rol = (usuario.rol || '').toUpperCase();
-    
-    // REDIRECCIÓN CORREGIDA: 
-    // Para que te lleve a la pantalla de los 4 pasos (CitasComponent)
-    if (rol === 'PACIENTE') {
-      this.router.navigate(['/citas']); 
-    } else if (rol === 'ADMIN') {
+  private redirigirSegunRol(rol: string): void {
+    if (!rol) {
+      this.router.navigate(['/home']);
+      return;
+    }
+
+    const roleUpper = rol.toUpperCase();
+    console.log('Detectado Rol:', roleUpper);
+
+    // Lógica de redirección solicitada
+    if (roleUpper === 'MEDICO') {
+      this.router.navigate(['/medico']);
+    } else if (roleUpper === 'PACIENTE') {
+      this.router.navigate(['/citas']);
+    } else if (roleUpper === 'ADMINISTRADOR') {
       this.router.navigate(['/admin']);
     } else {
       this.router.navigate(['/home']);
     }
-  }
-
-  private obtenerMensajeError(error: any): string {
-    if (error.status === 0) return 'No se puede conectar al servidor.';
-    if (error.status === 401) return 'Correo o contraseña incorrectos.';
-    return error.error?.message || 'Ocurrió un error inesperado.';
   }
 
   irARegistro(): void {
