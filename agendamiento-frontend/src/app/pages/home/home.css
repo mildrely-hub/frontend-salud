@@ -1,0 +1,189 @@
+.home {
+  background: #f5f7ff;
+}
+
+/* HERO */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 60px 80px 40px;
+  gap: 40px;
+}
+
+.hero-left {
+  max-width: 520px;
+}
+
+.hero-left h1 {
+  font-size: 40px;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.hero-subtitle {
+  color: #4b5563;
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-primary-dark {
+  background: #050815;
+  color: #ffffff;
+  padding: 10px 22px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-light {
+  background: #ffffff;
+  color: #050815;
+  padding: 10px 22px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 14px;
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+}
+
+.hero-right img {
+  width: 480px;
+  max-width: 100%;
+  border-radius: 24px;
+  object-fit: cover;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.18);
+}
+
+/* SECCIONES GENERALES */
+.section {
+  padding: 40px 80px;
+}
+
+.section h2 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 24px;
+}
+
+/* ¿POR QUÉ ELEGIRNOS? */
+.why {
+  padding-top: 10px;
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
+}
+
+.why-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+}
+
+.why-icon {
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.why-card h3 {
+  margin-bottom: 6px;
+  font-size: 16px;
+}
+
+/* SERVICIOS */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.service-pill {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 999px;
+  padding: 12px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+}
+
+/* BANNER AZUL */
+.cta-banner {
+  background: #1554ff;
+  color: #ffffff;
+  padding: 50px 20px;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.cta-content {
+  text-align: center;
+  max-width: 600px;
+}
+
+.cta-icon {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.cta-content h2 {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.cta-content p {
+  margin-bottom: 16px;
+  color: #e5e7eb;
+}
+
+/* FOOTER OSCURO */
+.footer-dark {
+  background: #0b1020;
+  color: #d1d5db;
+  padding: 40px 60px 20px;
+  margin-top: 40px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.footer-column h3,
+.footer-column h4 {
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.footer-logo {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.footer-divider {
+  border: none;
+  border-top: 1px solid #1f2937;
+  margin: 10px 0 20px;
+}
+
+.footer-copy {
+  text-align: center;
+  color: #9ca3af;
+  font-size: 14px;
+}

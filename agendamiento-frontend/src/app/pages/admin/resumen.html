@@ -1,0 +1,78 @@
+<div class="dashboard-container">
+    <aside class="sidebar">
+        <div class="logo-section">
+            <span>☰</span>
+            <span>♡ MJ Salud</span>
+        </div>
+
+        <nav class="nav-menu">
+            <a class="nav-item active">🔳 Resumen</a>
+            <a class="nav-item">👥 Usuarios</a>
+            <a class="nav-item">👤 Pacientes</a>
+            <a class="nav-item">⚕️ Médicos</a>
+            <a class="nav-item">📅 Citas</a>
+            <a class="nav-item">🛍️ Servicios</a>
+            <a class="nav-item">💳 Pagos</a>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <header class="top-header">
+            <div class="admin-profile">
+                <div class="admin-text">
+                    <strong>Admin Sistema</strong>
+                    <span>Administrador</span>
+                </div>
+                <button (click)="salir()" class="btn-salir">
+                    ↪ Salir
+                </button>
+            </div>
+        </header>
+
+        <div class="dashboard-body">
+            <h1>Panel de Control</h1>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <span>Total Usuarios</span>
+                        <h2>24</h2>
+                    </div>
+                    <div class="stat-icon" style="color: #3b82f6;">👥</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <span>Pacientes Activos</span>
+                        <h2>15</h2>
+                    </div>
+                    <div class="stat-icon" style="color: #10b981;">👤</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <span>Médicos</span>
+                        <h2>6</h2>
+                    </div>
+                    <div class="stat-icon" style="color: #8b5cf6;">⚕️</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <span>Citas Hoy</span>
+                        <h2>8</h2>
+                    </div>
+                    <div class="stat-icon" style="color: #f59e0b;">📅</div>
+                </div>
+            </div>
+
+            <div class="welcome-card">
+                <h3>Bienvenido, Admin</h3>
+                <p style="color: #64748b;">Sistema de Gestión de Citas - MJ Salud</p>
+                <br>
+                <p>Utiliza el menú lateral para navegar entre las diferentes secciones del sistema. Aquí podrás
+                    gestionar usuarios, pacientes, médicos, citas, servicios y pagos.</p>
+            </div>
+        </div>
+    </main>
+</div>

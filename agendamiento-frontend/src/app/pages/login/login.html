@@ -1,0 +1,85 @@
+<section class="login-wrapper">
+  <div class="login-card">
+    <div class="login-logo">
+      <span class="logo-icon">♡</span>
+    </div>
+
+    <h1 class="login-title">MJ Salud</h1>
+    <p class="login-subtitle">Inicia sesión en tu cuenta</p>
+
+    <!-- Mensaje de error -->
+    <div *ngIf="errorMensaje" class="alert-error">
+      <strong>⚠️ Error:</strong> {{ errorMensaje }}
+    </div>
+
+    <!-- Formulario de login -->
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+      <div class="form-group">
+        <label for="email">
+          <span>📧</span> Correo Electrónico
+        </label>
+        <input type="email" id="email" name="email" [(ngModel)]="email" placeholder="ejemplo@mjsalud.com" required
+          [disabled]="cargando" autocomplete="email">
+      </div>
+
+      <div class="form-group">
+        <label for="password">
+          <span>🔒</span> Contraseña
+        </label>
+        <input type="password" id="password" name="password" [(ngModel)]="password" placeholder="••••••••" required
+          [disabled]="cargando" autocomplete="current-password">
+      </div>
+
+      <button type="submit" class="btn-login-primary" [disabled]="cargando || !email || !password">
+        <span *ngIf="!cargando">🚀 Iniciar Sesión</span>
+        <span *ngIf="cargando">
+          <span class="spinner"></span> Procesando...
+        </span>
+      </button>
+    </form>
+
+    <!-- Credenciales de demostración -->
+    <div class="login-demo-box">
+      <p><strong>🔑 Credenciales de Prueba:</strong></p>
+      <p style="font-size: 12px; color: #6b7280; margin-bottom: 10px;">
+        Selecciona un tipo de usuario para probar:
+      </p>
+
+      <div class="demo-options">
+        <div *ngFor="let cred of demoCredentials" class="demo-option" (click)="usarCredencialDemo(cred)">
+          <div class="demo-header">
+            <span class="demo-icon">
+              {{ cred.tipo === 'Administrador' ? '👑' :
+              cred.tipo === 'Médico' ? '⚕️' : '👤' }}
+            </span>
+            <strong>{{ cred.tipo }}</strong>
+          </div>
+          <div class="demo-details">
+            <small><strong>Usuario:</strong> {{ cred.correo }}</small><br>
+            <small><strong>Contraseña:</strong> {{ cred.password }}</small>
+            <p class="demo-desc">{{ cred.descripcion }}</p>
+          </div>
+          <div class="demo-action">
+            <button type="button" class="btn-demo-try">Probar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Enlaces adicionales -->
+    <div class="login-footer">
+      <button routerLink="/" class="btn-login-secondary" [disabled]="cargando">
+        ↩ Volver al Inicio
+      </button>
+
+      <div class="login-links">
+        <a routerLink="/register" class="link-register">
+          📝 ¿No tienes cuenta? Regístrate
+        </a>
+        <a href="#" class="link-forgot">
+          🔓 ¿Olvidaste tu contraseña?
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
