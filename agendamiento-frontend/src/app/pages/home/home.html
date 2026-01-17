@@ -1,113 +1,236 @@
-<div class="home">
+<!-- src/app/pages/home/home.html -->
+<div class="home-container">
+  <!-- Header/Navbar SIMPLE -->
+  <header class="home-header">
+    <div class="header-container">
+      <!-- Logo -->
+      <div class="logo-section">
+        <div class="logo">
+          <i class="fas fa-heartbeat"></i>
+          <span>MJ Salud</span>
+        </div>
+      </div>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-left">
-      <h1>Tu salud es nuestra prioridad</h1>
-      <p class="hero-subtitle">
-        En MJ Salud brindamos atención médica de calidad con profesionales
-        experimentados. Agenda tu cita de forma rápida y sencilla.
+      <!-- Navegación simple -->
+      <nav class="nav-links">
+        <a href="#inicio" class="nav-link">Inicio</a>
+        <a href="#servicios" class="nav-link">Servicios</a>
+        <a href="#doctores" class="nav-link">Doctores</a>
+        <a href="#contacto" class="nav-link">Contacto</a>
+      </nav>
+
+      <!-- Botones simples -->
+      <div class="auth-buttons">
+        <a routerLink="/login" class="nav-link">Iniciar Sesión</a>
+        <a routerLink="/registro" class="btn-registro">Registrarse</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section SIMPLE -->
+  <section class="hero-section" id="inicio">
+    <div class="hero-container">
+      <div class="hero-content">
+        <h1 class="hero-title">
+          Cuidamos de tu <span class="highlight">salud</span> <br>
+          con <span class="highlight">excelencia</span> médica
+        </h1>
+        <p class="hero-subtitle">
+          Agenda citas médicas en línea, consulta con especialistas <br>
+          y gestiona tu salud desde cualquier lugar.
+        </p>
+
+        <div class="hero-actions">
+          <button class="btn-primary" (click)="irAAgendarCita()">
+            <i class="fas fa-calendar-plus"></i> Agendar Cita
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Servicios Section SIMPLE Y PEQUEÑA -->
+  <section class="servicios-section" id="servicios">
+    <div class="servicios-container">
+      <h2 class="section-title">
+        <i class="fas fa-stethoscope"></i> Nuestros Servicios
+      </h2>
+      <p class="section-subtitle">
+        Ofrecemos una amplia gama de servicios médicos especializados
       </p>
 
-      <div class="hero-actions">
-        <a routerLink="/citas" class="btn-primary-dark">Agendar Cita</a>
-        <a href="#servicios" class="btn-light">Conocer Más</a>
-      </div>
-    </div>
+      <div class="servicios-grid">
+        <!-- Servicio 1: Cardiología -->
+        <div class="servicio-card">
+          <div class="servicio-icon">
+            <i class="fas fa-heartbeat"></i>
+          </div>
+          <h3>Cardiología</h3>
+          <p>Especialistas en salud cardiovascular y enfermedades del corazón.</p>
+        </div>
 
-    <div class="hero-right">
-      <!-- Cambia la imagen por la que tengas en assets -->
-      <img src="assets/doctor-hero.png" alt="Doctor" />
+        <!-- Servicio 2: Odontología -->
+        <div class="servicio-card">
+          <div class="servicio-icon">
+            <i class="fas fa-tooth"></i>
+          </div>
+          <h3>Odontología</h3>
+          <p>Cuidado dental integral para toda la familia.</p>
+        </div>
+
+        <!-- Servicio 3: Oftalmología -->
+        <div class="servicio-card">
+          <div class="servicio-icon">
+            <i class="fas fa-eye"></i>
+          </div>
+          <h3>Oftalmología</h3>
+          <p>Diagnóstico y tratamiento de problemas visuales.</p>
+        </div>
+
+        <!-- Servicio 4: Psicología -->
+        <div class="servicio-card">
+          <div class="servicio-icon">
+            <i class="fas fa-brain"></i>
+          </div>
+          <h3>Psicología</h3>
+          <p>Atención psicológica y terapia emocional.</p>
+        </div>
+
+        <!-- Servicio 5: Pediatría -->
+        <div class="servicio-card">
+          <div class="servicio-icon">
+            <i class="fas fa-baby"></i>
+          </div>
+          <h3>Pediatría</h3>
+          <p>Cuidado especializado para niños y adolescentes.</p>
+        </div>
+
+        <!-- Servicio 6: Farmacología -->
+        <div class="servicio-card">
+          <div class="servicio-icon">
+            <i class="fas fa-pills"></i>
+          </div>
+          <h3>Farmacología</h3>
+          <p>Asesoramiento sobre medicamentos y tratamientos.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ¿POR QUÉ ELEGIRNOS? -->
-  <section class="section why">
-    <h2>¿Por qué elegirnos?</h2>
-
-    <div class="why-grid">
-      <div class="why-card">
-        <div class="why-icon">📅</div>
-        <h3>Fácil Agendamiento</h3>
-        <p>Agenda tus citas en línea de forma rápida y sin complicaciones.</p>
-      </div>
-
-      <div class="why-card">
-        <div class="why-icon">👨‍⚕️</div>
-        <h3>Profesionales Calificados</h3>
-        <p>Médicos especialistas con amplia experiencia y certificaciones.</p>
-      </div>
-
-      <div class="why-card">
-        <div class="why-icon">⏰</div>
-        <h3>Atención Oportuna</h3>
-        <p>Horarios flexibles que se adaptan a tus necesidades.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- NUESTROS SERVICIOS -->
-  <section class="section" id="servicios">
-    <h2>Nuestros Servicios</h2>
-
-    <div class="services-grid">
-      <button class="service-pill">Medicina General</button>
-      <button class="service-pill">Pediatría</button>
-      <button class="service-pill">Cardiología</button>
-      <button class="service-pill">Ginecología</button>
-      <button class="service-pill">Traumatología</button>
-      <button class="service-pill">Dermatología</button>
-      <button class="service-pill">Oftalmología</button>
-      <button class="service-pill">Odontología</button>
-    </div>
-  </section>
-
-  <!-- BANNER AZUL -->
-  <section class="cta-banner">
-    <div class="cta-content">
-      <div class="cta-icon">🛡️</div>
-      <h2>Comienza a cuidar tu salud hoy</h2>
-      <p>
-        Agenda tu primera consulta y descubre la diferencia de una atención
-        personalizada.
+  <!-- Doctores Section SIMPLE (sin estrellas ni botones extras) -->
+  <section class="doctores-section" id="doctores">
+    <div class="doctores-container">
+      <h2 class="section-title">
+        <i class="fas fa-user-md"></i> Nuestros Doctores
+      </h2>
+      <p class="section-subtitle">
+        Conoce a nuestro equipo de profesionales especializados
       </p>
-      <a routerLink="/citas" class="btn-light">Agendar Ahora</a>
+
+      <div class="doctores-grid">
+        <!-- Doctor 1 -->
+        <div class="doctor-card">
+          <div class="doctor-image">
+            <img src="assets/doctor-1.png" alt="Dr. Carlos Rodríguez">
+          </div>
+          <div class="doctor-info">
+            <h3>Dr. Carlos Rodríguez</h3>
+            <p class="doctor-especialidad">Cardiólogo</p>
+            <p class="doctor-experiencia">
+              <i class="fas fa-clock"></i> 15 años de experiencia
+            </p>
+            <p class="doctor-descripcion">Especialista en enfermedades cardiovasculares.</p>
+          </div>
+        </div>
+
+        <!-- Doctor 2 -->
+        <div class="doctor-card">
+          <div class="doctor-image">
+            <img src="assets/doctor-2.png" alt="Dra. Ana Martínez">
+          </div>
+          <div class="doctor-info">
+            <h3>Dra. Ana Martínez</h3>
+            <p class="doctor-especialidad">Dermatóloga</p>
+            <p class="doctor-experiencia">
+              <i class="fas fa-clock"></i> 12 años de experiencia
+            </p>
+            <p class="doctor-descripcion">Experta en cuidado de la piel y tratamientos dermatológicos.</p>
+          </div>
+        </div>
+
+        <!-- Doctor 3 -->
+        <div class="doctor-card">
+          <div class="doctor-image">
+            <img src="assets/doctor-3.png" alt="Dr. Luis Gómez">
+          </div>
+          <div class="doctor-info">
+            <h3>Dr. Luis Gómez</h3>
+            <p class="doctor-especialidad">Médico General</p>
+            <p class="doctor-experiencia">
+              <i class="fas fa-clock"></i> 10 años de experiencia
+            </p>
+            <p class="doctor-descripcion">Atención integral para toda la familia.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
-  <!-- FOOTER OSCURO -->
-  <footer class="footer-dark" id="contacto">
-    <div class="footer-grid">
 
-      <!-- Columna 1 -->
-      <div class="footer-column">
-        <h3 class="footer-logo">♡ MJ Salud</h3>
-        <p>Brindando atención médica de calidad desde 2020</p>
+  <!-- Contacto Section PEQUEÑO (sin formulario) -->
+  <section class="contacto-section" id="contacto">
+    <div class="contacto-container">
+      <h2 class="section-title">
+        <i class="fas fa-address-book"></i> Contacto
+      </h2>
+
+      <div class="contacto-simple">
+        <div class="contacto-item">
+          <i class="fas fa-phone"></i>
+          <div>
+            <h4>Teléfono</h4>
+            <p>916-667-862</p>
+          </div>
+        </div>
+
+        <div class="contacto-item">
+          <i class="fas fa-envelope"></i>
+          <div>
+            <h4>Email</h4>
+            <p>MJsalud@gmail.com</p>
+          </div>
+        </div>
+
+        <div class="contacto-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <div>
+            <h4>Dirección</h4>
+            <p>Av. Ampay #123, Abancay</p>
+          </div>
+        </div>
+
+        <div class="contacto-item">
+          <i class="fas fa-clock"></i>
+          <div>
+            <h4>Horario</h4>
+            <p>Lunes a Viernes: 8:00 AM - 6:00 PM</p>
+          </div>
+        </div>
       </div>
-
-      <!-- Columna 2 -->
-      <div class="footer-column">
-        <h4>Contacto</h4>
-        <p>📞 +57 300 123 4567</p>
-        <p>📧 info@mjsalud.com</p>
-        <p>Calle 123 #45-67, Bogotá</p>
-      </div>
-
-      <!-- Columna 3 -->
-      <div class="footer-column">
-        <h4>Horarios</h4>
-        <p>Lunes - Viernes: 7:00 AM - 7:00 PM</p>
-        <p>Sábados: 8:00 AM - 2:00 PM</p>
-        <p>Domingos: Cerrado</p>
-      </div>
-
     </div>
+  </section>
 
-    <hr class="footer-divider" />
+  <!-- Footer simple -->
+  <footer class="home-footer">
+    <div class="footer-container">
+      <div class="footer-logo">
+        <i class="fas fa-heartbeat"></i>
+        <span>MJ Salud</span>
+      </div>
 
-    <p class="footer-copy">
-      © {{ currentYear }} MJ Salud. Todos los derechos reservados.
-    </p>
-
+      <div class="footer-copyright">
+        <p>© 2024 MJ Salud. Todos los derechos reservados.</p>
+        <p>Teléfono: 916-667-862</p>
+      </div>
+    </div>
   </footer>
-
 </div>

@@ -1,0 +1,178 @@
+<!-- src/app/pages/registro/registro.html -->
+<div class="registro-container">
+    <div class="registro-card">
+        <div class="header">
+            <h1><i class="fas fa-user-plus"></i> Crear Cuenta</h1>
+            <p class="subtitle">Regístrate para acceder al sistema de citas médicas</p>
+        </div>
+
+        <!-- Mensajes de error/éxito -->
+        <div *ngIf="errorMessage" class="alert alert-error">
+            <i class="fas fa-exclamation-circle"></i> {{ errorMessage }}
+        </div>
+
+        <div *ngIf="successMessage" class="alert alert-success">
+            <i class="fas fa-check-circle"></i> {{ successMessage }}
+        </div>
+
+        <form (ngSubmit)="onSubmit()" #registroForm="ngForm">
+            <!-- Datos personales -->
+            <div class="form-section">
+                <h3><i class="fas fa-user"></i> Datos Personales</h3>
+
+                <div class="row">
+                    <div class="form-group col">
+                        <label for="nombre">
+                            <i class="fas fa-user"></i> Nombre *
+                        </label>
+                        <input type="text" id="nombre" name="nombre" [(ngModel)]="nombre" required
+                            placeholder="Ingresa tu nombre">
+                    </div>
+
+                    <div class="form-group col">
+                        <label for="apellido">
+                            <i class="fas fa-user"></i> Apellido *
+                        </label>
+                        <input type="text" id="apellido" name="apellido" [(ngModel)]="apellido" required
+                            placeholder="Ingresa tu apellido">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col">
+                        <label for="email">
+                            <i class="fas fa-envelope"></i> Email *
+                        </label>
+                        <input type="email" id="email" name="email" [(ngModel)]="email" required
+                            placeholder="ejemplo@email.com">
+                    </div>
+
+                    <div class="form-group col">
+                        <label for="telefono">
+                            <i class="fas fa-phone"></i> Teléfono
+                        </label>
+                        <input type="tel" id="telefono" name="telefono" [(ngModel)]="telefono" placeholder="8888-8888">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col">
+                        <label for="fechaNacimiento">
+                            <i class="fas fa-birthday-cake"></i> Fecha de Nacimiento
+                        </label>
+                        <input type="date" id="fechaNacimiento" name="fechaNacimiento" [(ngModel)]="fechaNacimiento">
+                    </div>
+
+                    <div class="form-group col">
+                        <label for="genero">
+                            <i class="fas fa-venus-mars"></i> Género
+                        </label>
+                        <select id="genero" name="genero" [(ngModel)]="genero">
+                            <option value="">Seleccionar</option>
+                            <option value="masculino">Masculino</option>
+                            <option value="femenino">Femenino</option>
+                            <option value="otro">Otro</option>
+                            <option value="prefiero-no-decir">Prefiero no decir</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tipo de usuario -->
+            <div class="form-section">
+                <h3><i class="fas fa-user-tag"></i> Tipo de Usuario</h3>
+                <div class="form-group">
+                    <div class="tipo-usuario-options">
+                        <label class="option-card" [class.selected]="tipoUsuario === 'paciente'">
+                            <input type="radio" name="tipoUsuario" value="paciente" [(ngModel)]="tipoUsuario" checked>
+                            <div class="option-content">
+                                <i class="fas fa-user-injured"></i>
+                                <span>Paciente</span>
+                                <small>Agenda citas médicas</small>
+                            </div>
+                        </label>
+
+                        <label class="option-card" [class.selected]="tipoUsuario === 'medico'">
+                            <input type="radio" name="tipoUsuario" value="medico" [(ngModel)]="tipoUsuario">
+                            <div class="option-content">
+                                <i class="fas fa-user-md"></i>
+                                <span>Médico</span>
+                                <small>Atiende pacientes</small>
+                            </div>
+                        </label>
+
+                        <label class="option-card" [class.selected]="tipoUsuario === 'admin'">
+                            <input type="radio" name="tipoUsuario" value="admin" [(ngModel)]="tipoUsuario">
+                            <div class="option-content">
+                                <i class="fas fa-user-shield"></i>
+                                <span>Administrador</span>
+                                <small>Gestiona el sistema</small>
+                            </div>
+                        </label>
+                    </div>
+                    <small class="note">* El rol de Admin requiere autorización especial</small>
+                </div>
+            </div>
+
+            <!-- Contraseñas -->
+            <div class="form-section">
+                <h3><i class="fas fa-lock"></i> Seguridad</h3>
+
+                <div class="row">
+                    <div class="form-group col">
+                        <label for="password">
+                            <i class="fas fa-key"></i> Contraseña *
+                        </label>
+                        <input type="password" id="password" name="password" [(ngModel)]="password" required
+                            placeholder="Mínimo 6 caracteres">
+                    </div>
+
+                    <div class="form-group col">
+                        <label for="confirmPassword">
+                            <i class="fas fa-key"></i> Confirmar Contraseña *
+                        </label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" [(ngModel)]="confirmPassword"
+                            required placeholder="Repite tu contraseña">
+                    </div>
+                </div>
+
+                <div class="password-strength" *ngIf="password">
+                    <div class="strength-bar">
+                        <div class="strength-level" [style.width.%]="getPasswordStrength()"></div>
+                    </div>
+                    <small class="strength-text">
+                        Fortaleza: {{ getPasswordStrengthText() }}
+                    </small>
+                </div>
+            </div>
+
+            <!-- Términos y condiciones -->
+            <div class="form-section terms">
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" required>
+                        <span>Acepto los <a href="#">Términos y Condiciones</a> y la <a href="#">Política de
+                                Privacidad</a></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Botones -->
+            <div class="form-actions">
+                <button type="button" class="btn-volver" (click)="volverAlLogin()">
+                    <i class="fas fa-arrow-left"></i> Volver al Login
+                </button>
+                <button type="submit" class="btn-registrar" [disabled]="isLoading || !registroForm.form.valid">
+                    <i class="fas" [class.fa-spinner]="isLoading" [class.fa-spin]="isLoading"
+                        [class.fa-user-plus]="!isLoading"></i>
+                    {{ isLoading ? 'Registrando...' : 'Crear Cuenta' }}
+                </button>
+            </div>
+
+            <!-- Enlace a login -->
+            <div class="login-link">
+                <p>¿Ya tienes una cuenta? <a routerLink="/login">Inicia sesión aquí</a></p>
+            </div>
+        </form>
+    </div>
+</div>

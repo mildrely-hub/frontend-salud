@@ -1,16 +1,22 @@
+// src/app/app.routes.ts
 import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home';
 import { LoginComponent } from './pages/login/login';
 import { AdminComponent } from './pages/admin/resumen';
-import { Usuarios } from './pages/usuarios/usuarios';  // ← Cambiado: Usuarios (no UsuariosComponent)
+import { Usuarios } from './pages/usuarios/usuarios';
 import { CitasComponent } from './pages/citas/citas';
+// CORREGIR ESTA LÍNEA:
+import { AgendarCitaComponent } from './pages/citas/agendar-citas/agendar-cita'; // ← "agendar-citas" con "s"
+import { RegistroComponent } from './pages/registro/registro';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'admin', component: AdminComponent },
-  { path: 'usuarios', component: Usuarios },  // ← Cambiado: Usuarios
+  { path: 'usuarios', component: Usuarios },
   { path: 'citas', component: CitasComponent },
+  { path: 'citas/agendar', component: AgendarCitaComponent },
+  { path: 'registro', component: RegistroComponent },
   { path: '**', redirectTo: '/home' }
 ];

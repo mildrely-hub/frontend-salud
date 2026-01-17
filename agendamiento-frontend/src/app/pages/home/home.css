@@ -1,189 +1,394 @@
-.home {
-  background: #f5f7ff;
+/* src/app/pages/home/home.css */
+.home-container {
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* HERO */
-.hero {
+/* ===== HEADER SIMPLE ===== */
+.home-header {
+  background: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 15px 30px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 60px 80px 40px;
-  gap: 40px;
+  justify-content: space-between;
 }
 
-.hero-left {
-  max-width: 520px;
+.logo-section {
+  display: flex;
+  align-items: center;
 }
 
-.hero-left h1 {
-  font-size: 40px;
-  margin-bottom: 16px;
-  font-weight: 600;
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a5fb4;
+}
+
+.logo i {
+  font-size: 28px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+}
+
+.nav-link {
+  color: #37474f;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: #1a5fb4;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.btn-registro {
+  background: #1a5fb4;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 15px;
+  transition: background 0.3s;
+}
+
+.btn-registro:hover {
+  background: #0d4d9c;
+}
+
+/* ===== HERO SECTION SIMPLE ===== */
+.hero-section {
+  background: linear-gradient(135deg, #f8fafc 0%, #e3f2fd 100%);
+  padding: 60px 30px;
+  text-align: center;
+}
+
+.hero-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero-title {
+  font-size: 36px;
+  color: #1a237e;
+  line-height: 1.3;
+  margin-bottom: 20px;
+}
+
+.highlight {
+  color: #1a5fb4;
 }
 
 .hero-subtitle {
-  color: #4b5563;
-  margin-bottom: 24px;
-  line-height: 1.5;
+  font-size: 18px;
+  color: #546e7a;
+  line-height: 1.6;
+  margin-bottom: 40px;
 }
 
 .hero-actions {
   display: flex;
-  gap: 12px;
+  justify-content: center;
 }
 
-.btn-primary-dark {
-  background: #050815;
-  color: #ffffff;
-  padding: 10px 22px;
-  border-radius: 999px;
-  text-decoration: none;
-  font-size: 14px;
+.btn-primary {
+  background: linear-gradient(135deg, #1a5fb4 0%, #0d4d9c 100%);
+  color: white;
   border: none;
-  cursor: pointer;
-}
-
-.btn-light {
-  background: #ffffff;
-  color: #050815;
-  padding: 10px 22px;
-  border-radius: 999px;
-  text-decoration: none;
-  font-size: 14px;
-  border: 1px solid #e5e7eb;
-  cursor: pointer;
-}
-
-.hero-right img {
-  width: 480px;
-  max-width: 100%;
-  border-radius: 24px;
-  object-fit: cover;
-  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.18);
-}
-
-/* SECCIONES GENERALES */
-.section {
-  padding: 40px 80px;
-}
-
-.section h2 {
-  text-align: center;
-  font-size: 24px;
-  margin-bottom: 24px;
-}
-
-/* ¿POR QUÉ ELEGIRNOS? */
-.why {
-  padding-top: 10px;
-}
-
-.why-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 20px;
-}
-
-.why-card {
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 18px;
-  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
-}
-
-.why-icon {
-  font-size: 26px;
-  margin-bottom: 10px;
-}
-
-.why-card h3 {
-  margin-bottom: 6px;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-weight: 600;
   font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s;
 }
 
-/* SERVICIOS */
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 16px;
-  max-width: 900px;
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(26, 95, 180, 0.2);
+}
+
+/* ===== SERVICIOS SECTION PEQUEÑA ===== */
+.servicios-section {
+  padding: 60px 30px;
+  background: white;
+}
+
+.servicios-container {
+  max-width: 1200px;
   margin: 0 auto;
 }
 
-.service-pill {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 999px;
-  padding: 12px 16px;
-  font-size: 14px;
-  cursor: pointer;
+.section-title {
   text-align: center;
-}
-
-/* BANNER AZUL */
-.cta-banner {
-  background: #1554ff;
-  color: #ffffff;
-  padding: 50px 20px;
+  font-size: 28px;
+  color: #1a237e;
+  margin-bottom: 15px;
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-top: 20px;
+  gap: 10px;
 }
 
-.cta-content {
+.section-subtitle {
   text-align: center;
-  max-width: 600px;
+  color: #666;
+  font-size: 16px;
+  margin-bottom: 40px;
 }
 
-.cta-icon {
-  font-size: 32px;
-  margin-bottom: 10px;
+.servicios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
 }
 
-.cta-content h2 {
+.servicio-card {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 25px;
+  text-align: center;
+  border: 1px solid #e2e8f0;
+  transition: transform 0.3s;
+}
+
+.servicio-card:hover {
+  transform: translateY(-5px);
+  border-color: #1a5fb4;
+}
+
+.servicio-icon {
+  width: 60px;
+  height: 60px;
+  background: #e3f2fd;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
   font-size: 24px;
-  margin-bottom: 8px;
+  color: #1a5fb4;
 }
 
-.cta-content p {
-  margin-bottom: 16px;
-  color: #e5e7eb;
+.servicio-card h3 {
+  color: #1a237e;
+  margin-bottom: 12px;
+  font-size: 20px;
 }
 
-/* FOOTER OSCURO */
-.footer-dark {
-  background: #0b1020;
-  color: #d1d5db;
-  padding: 40px 60px 20px;
+.servicio-card p {
+  color: #546e7a;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+/* ===== DOCTORES SECTION SIMPLE ===== */
+.doctores-section {
+  padding: 60px 30px;
+  background: #f8fafc;
+}
+
+.doctores-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.doctores-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
   margin-top: 40px;
 }
 
-.footer-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 30px;
-  margin-bottom: 20px;
+.doctor-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
-.footer-column h3,
-.footer-column h4 {
-  color: #ffffff;
-  margin-bottom: 10px;
+.doctor-image {
+  height: 200px;
+  overflow: hidden;
+}
+
+.doctor-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.doctor-info {
+  padding: 20px;
+}
+
+.doctor-info h3 {
+  color: #1a237e;
+  margin-bottom: 8px;
+  font-size: 20px;
+}
+
+.doctor-especialidad {
+  color: #1a5fb4;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+
+.doctor-experiencia {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.doctor-descripcion {
+  color: #37474f;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+/* ===== CONTACTO SECTION PEQUEÑO ===== */
+.contacto-section {
+  padding: 60px 30px;
+  background: white;
+}
+
+.contacto-container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.contacto-simple {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.contacto-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 25px;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.contacto-item i {
+  font-size: 28px;
+  color: #1a5fb4;
+}
+
+.contacto-item h4 {
+  color: #1a237e;
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+
+.contacto-item p {
+  color: #546e7a;
+  font-size: 14px;
+}
+
+/* ===== FOOTER SIMPLE ===== */
+.home-footer {
+  background: #1a237e;
+  color: white;
+  padding: 40px 30px;
+  text-align: center;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .footer-logo {
-  font-size: 22px;
-  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
 }
 
-.footer-divider {
-  border: none;
-  border-top: 1px solid #1f2937;
-  margin: 10px 0 20px;
+.footer-logo i {
+  color: #4cc9f0;
 }
 
-.footer-copy {
-  text-align: center;
-  color: #9ca3af;
+.footer-copyright {
+  opacity: 0.8;
   font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .hero-title {
+    font-size: 28px;
+  }
+
+  .hero-subtitle {
+    font-size: 16px;
+  }
+
+  .section-title {
+    font-size: 24px;
+  }
+
+  .servicios-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .doctores-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contacto-simple {
+    grid-template-columns: 1fr;
+  }
 }
